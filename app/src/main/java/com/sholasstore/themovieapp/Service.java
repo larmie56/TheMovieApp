@@ -1,4 +1,9 @@
 package com.sholasstore.themovieapp;
 
-public class Service {
+import retrofit2.http.GET;
+
+public interface Service {
+
+    //@GET
+    //Single<>
 }
