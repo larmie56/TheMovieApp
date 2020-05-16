@@ -2,6 +2,8 @@ package com.sholasstore.themovieapp;
 
 import android.app.Application;
 
+import com.sholasstore.themovieapp.repo.RepoImpl;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class App extends Application {
 
-    public static Service getService() {
+    private static Service getService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -27,6 +29,10 @@ public class App extends Application {
                 .build();
 
         return retrofit.create(Service.class);
+    }
+
+    public static RepoImpl getRepo() {
+        return new RepoImpl(getService());
     }
 
     private static OkHttpClient getClient() {
