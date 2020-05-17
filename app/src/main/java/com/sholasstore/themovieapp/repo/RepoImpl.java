@@ -26,4 +26,24 @@ public class RepoImpl implements RemoteRepo {
             }
         });
     }
+
+    @Override
+    public Single<List<MovieListUIModel>> getTopRatedMovies(int page) {
+        return mService.getTopRatedMovies(page).map(new Function<MovieResponse, List<MovieListUIModel>>() {
+            @Override
+            public List<MovieListUIModel> apply(MovieResponse response) {
+                return ObjectMapper.mapApiResponseToUIModel(response);
+            }
+        });
+    }
+
+    @Override
+    public Single<List<MovieListUIModel>> getUpcomingMovies(int page) {
+        return mService.getUpcomingMovies(page).map(new Function<MovieResponse, List<MovieListUIModel>>() {
+            @Override
+            public List<MovieListUIModel> apply(MovieResponse response) {
+                return ObjectMapper.mapApiResponseToUIModel(response);
+            }
+        });
+    }
 }

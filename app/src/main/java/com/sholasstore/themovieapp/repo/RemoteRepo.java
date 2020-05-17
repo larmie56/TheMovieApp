@@ -9,4 +9,6 @@ import io.reactivex.Single;
 interface RemoteRepo {
 
     Single<List<MovieListUIModel>> getPopularMovies(int page);
+    Single<List<MovieListUIModel>> getTopRatedMovies(int page);
+    Single<List<MovieListUIModel>> getUpcomingMovies(int page);
 }

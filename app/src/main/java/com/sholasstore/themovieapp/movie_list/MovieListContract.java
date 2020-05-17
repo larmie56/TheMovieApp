@@ -5,7 +5,8 @@ import java.util.List;
 public interface MovieListContract {
 
     interface View extends BaseView {
-        void showData(List<MovieListUIModel> uiModels);
+        void submitList(List<MovieListUIModel> uiModel);
+        void showData();
         void showLoading();
         void hideLoading();
         void showError(Throwable throwable);

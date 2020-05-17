@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.sholasstore.themovieapp.R;
 import com.sholasstore.themovieapp.StringUtil;
 import com.sholasstore.themovieapp.databinding.MovieListItemBinding;
 
@@ -33,9 +34,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return R.layout.movie_list_item;
+    }
+
+    @Override
     public int getItemCount() {
         return mUIModels.size();
     }
+
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         MovieListItemBinding mBinding;

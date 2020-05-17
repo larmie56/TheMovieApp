@@ -2,6 +2,7 @@ package com.sholasstore.themovieapp.movie_list;
 
 import com.sholasstore.themovieapp.repo.RepoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,21 +23,24 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
     @Override
     public void fetchData() {
+
         mView.showLoading();
 
         mDisposable = mRepo.getPopularMovies(1)
+                .mergeWith(mRepo.getTopRatedMovies(1))
+                .mergeWith(mRepo.getUpcomingMovies(1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate(new Action() {
                     @Override
                     public void run() throws Exception {
                         mView.hideLoading();
+                        mView.showData();
                     }
-                })
-                .subscribe(new Consumer<List<MovieListUIModel>>() {
+                }).subscribe(new Consumer<List<MovieListUIModel>>() {
                     @Override
                     public void accept(List<MovieListUIModel> uiModels) throws Exception {
-                        mView.showData(uiModels);
+                        mView.submitList(uiModels);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
