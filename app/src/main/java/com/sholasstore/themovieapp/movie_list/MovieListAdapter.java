@@ -13,7 +13,7 @@ import com.sholasstore.themovieapp.databinding.MovieListItemBinding;
 
 import java.util.List;
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
+public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieItemViewHolder> {
     private final List<MovieListUIModel> mUIModels;
 
     public MovieListAdapter(List<MovieListUIModel> uiModels) {
@@ -22,15 +22,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final MovieListItemBinding binding = MovieListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(binding);
+    public MovieItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            final MovieListItemBinding binding =
+                    MovieListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent,false);
+            return new MovieItemViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MovieListUIModel uiModel = mUIModels.get(position);
-        holder.bind(uiModel);
+    public void onBindViewHolder(@NonNull MovieItemViewHolder holder, int position) {
+            MovieListUIModel uiModel = mUIModels.get(position);
+            holder.bind(uiModel);
     }
 
     @Override
@@ -43,20 +44,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         return mUIModels.size();
     }
 
+    static class MovieItemViewHolder extends RecyclerView.ViewHolder {
+        MovieListItemBinding mItemBinding;
 
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        MovieListItemBinding mBinding;
-
-        ViewHolder(MovieListItemBinding binding) {
-            super(binding.getRoot());
-            mBinding = binding;
+        MovieItemViewHolder(MovieListItemBinding itemBinding) {
+            super(itemBinding.getRoot());
+            mItemBinding = itemBinding;
         }
 
         void bind(MovieListUIModel uiModel) {
-            Glide.with(mBinding.getRoot().getContext())
+            Glide.with(mItemBinding.getRoot().getContext())
                     .load(StringUtil.appendBaseImageUrl(uiModel.getPosterPath()))
-                    .into(mBinding.imageViewMoviePoster);
+                    .into(mItemBinding.imageViewMoviePoster);
         }
     }
 }

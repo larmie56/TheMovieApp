@@ -10,9 +10,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.MergeAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.databinding.FragmentMovieListBinding;
@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieListFragment extends Fragment implements MovieListContract.View {
-    private RecyclerView mRecyclerView;
+    private RecyclerView mPopularMovieRecyclerView;
+    private RecyclerView mTopMovieRecyclerView;
+    private RecyclerView mUpcomingMovieRecyclerView;
     private FragmentMovieListBinding mBinding;
     private MovieListPresenter mPresenter;
     private ProgressBar mProgressBar;
@@ -39,12 +41,17 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
         super.onViewCreated(view, savedInstanceState);
         mPresenter = new MovieListPresenter(App.getRepo(), this);
         mPresenter.attachView(this);
-        mRecyclerView = mBinding.recyclerViewMovieList;
+        mPopularMovieRecyclerView = mBinding.recyclerViewPopularMovies;
+        mTopMovieRecyclerView = mBinding.recyclerViewTopMovies;
+        mUpcomingMovieRecyclerView = mBinding.recyclerViewUpcomingMovies;
         mProgressBar = mBinding.progressCircular;
         mUiModelsArray = new ArrayList[3];
         mUiModelsArray[0] = new ArrayList<>();
         mUiModelsArray[1] = new ArrayList<>();
         mUiModelsArray[2] = new ArrayList<>();
+        mBinding.textViewPopularMovies.setText("Popular Movies");
+        mBinding.textViewTopMovies.setText("Top Movies");
+        mBinding.textViewUpcomingMovies.setText("Upcoming Movies");
 
         mPresenter.fetchData();
     }
@@ -64,17 +71,13 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
 
     @Override
     public void showData() {
-        //mRecyclerView.setAdapter(new MovieListAdapter(uiModels));
         MovieListAdapter popularMoviesAdapter = new MovieListAdapter(mUiModelsArray[0]);
         MovieListAdapter topRatedMoviesAdapter = new MovieListAdapter(mUiModelsArray[1]);
         MovieListAdapter upcomingMoviesAdapter = new MovieListAdapter(mUiModelsArray[2]);
 
-        MergeAdapter.Config mergeAdapterConfig = new MergeAdapter.Config.Builder()
-                .setIsolateViewTypes(false).build();
-        MergeAdapter mergeAdapter =
-                new MergeAdapter(mergeAdapterConfig, popularMoviesAdapter, topRatedMoviesAdapter, upcomingMoviesAdapter);
-        mRecyclerView.setAdapter(mergeAdapter);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mPopularMovieRecyclerView.setAdapter(popularMoviesAdapter);
+        mTopMovieRecyclerView.setAdapter(topRatedMoviesAdapter);
+        mUpcomingMovieRecyclerView.setAdapter(upcomingMoviesAdapter);
     }
 
     @Override
