@@ -16,7 +16,7 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     private MovieListContract.View mView;
     private Disposable mDisposable;
 
-    public MovieListPresenter(RepoImpl repo, MovieListContract.View view) {
+    MovieListPresenter(RepoImpl repo, MovieListContract.View view) {
         mRepo = repo;
         mView = view;
     }

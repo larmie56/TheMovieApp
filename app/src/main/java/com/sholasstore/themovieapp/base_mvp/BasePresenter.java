@@ -1,4 +1,4 @@
-package com.sholasstore.themovieapp.movie_list;
+package com.sholasstore.themovieapp.base_mvp;
 
 public interface BasePresenter<T extends BaseView> {
     void attachView(T view);

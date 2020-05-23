@@ -1,13 +1,14 @@
 package com.sholasstore.themovieapp.movie_list;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.sholasstore.themovieapp.R;
+import com.sholasstore.themovieapp.IMainActivity;
 import com.sholasstore.themovieapp.StringUtil;
 import com.sholasstore.themovieapp.databinding.MovieListItemBinding;
 
@@ -29,14 +30,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MovieItemViewHolder holder, int position) {
             MovieListUIModel uiModel = mUIModels.get(position);
             holder.bind(uiModel);
-    }
 
-    @Override
-    public int getItemViewType(int position) {
-        return R.layout.movie_list_item;
+        final View bindingRoot = holder.mItemBinding.getRoot();
+        bindingRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    IMainActivity iMainActivity = ((IMainActivity)bindingRoot.getContext());
+                    iMainActivity.openDetailsFragment();
+                }
+            });
     }
 
     @Override

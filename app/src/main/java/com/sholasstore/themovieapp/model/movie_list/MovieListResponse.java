@@ -1,15 +1,16 @@
-package com.sholasstore.themovieapp.model;
+package com.sholasstore.themovieapp.model.movie_list;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sholasstore.themovieapp.model.movie_list.MovieResult;
 
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 
-public class MovieResponse {
+public class MovieListResponse {
 
         @JsonProperty("page")
         private Integer page;

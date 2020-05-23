@@ -1,9 +1,10 @@
-package com.sholasstore.themovieapp.model;
+package com.sholasstore.themovieapp.model.movie_list;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,33 +12,33 @@ import java.util.Map;
 
 public class MovieResult {
 
-    @JsonProperty("popularity")
+    @SerializedName("popularity")
     private Double popularity;
-    @JsonProperty("vote_count")
+    @SerializedName("vote_count")
     private Integer voteCount;
-    @JsonProperty("video")
+    @SerializedName("video")
     private Boolean video;
-    //@JsonProperty("poster_path")
-    private String poster_path;
-    @JsonProperty("id")
+    @SerializedName("poster_path")
+    private String posterPath;
+    @SerializedName("id")
     private Integer id;
-    @JsonProperty("adult")
+    @SerializedName("adult")
     private Boolean adult;
-    @JsonProperty("backdrop_path")
+    @SerializedName("backdrop_path")
     private String backdropPath;
-    @JsonProperty("original_language")
+    @SerializedName("original_language")
     private String originalLanguage;
-    @JsonProperty("original_title")
+    @SerializedName("original_title")
     private String originalTitle;
-    @JsonProperty("genre_ids")
+    @SerializedName("genre_ids")
     private List<Integer> genreIds = null;
-    @JsonProperty("title")
+    @SerializedName("title")
     private String title;
-    @JsonProperty("vote_average")
+    @SerializedName("vote_average")
     private Double voteAverage;
-    @JsonProperty("overview")
+    @SerializedName("overview")
     private String overview;
-    @JsonProperty("release_date")
+    @SerializedName("release_date")
     private String releaseDate;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -73,13 +74,13 @@ public class MovieResult {
     }
 
     @JsonProperty("poster_path")
-    public String getPoster_path() {
-        return poster_path;
+    public String getPosterPath() {
+        return posterPath;
     }
 
     @JsonProperty("poster_path")
-    public void setPoster_path(String poster_path) {
-        this.poster_path = poster_path;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
     @JsonProperty("id")

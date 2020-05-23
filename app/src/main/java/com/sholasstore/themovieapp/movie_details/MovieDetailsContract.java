@@ -1,18 +1,15 @@
-package com.sholasstore.themovieapp.movie_list;
+package com.sholasstore.themovieapp.movie_details;
 
 import com.sholasstore.themovieapp.base_mvp.BasePresenter;
 import com.sholasstore.themovieapp.base_mvp.BaseView;
 
-import java.util.List;
-
-public interface MovieListContract {
+public class MovieDetailsContract {
 
     interface View extends BaseView {
-        void submitList(List<MovieListUIModel> uiModel);
-        void showData();
+        void showMovieDetails(MovieDetailsUIModel uiModel);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void fetchData();
+        void fetchData(int movieId);
     }
 }
