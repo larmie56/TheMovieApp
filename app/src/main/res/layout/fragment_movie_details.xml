@@ -13,7 +13,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
         style="Widget.MaterialComponents.CardView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:cardElevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,10 +22,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/guideline">
             <ImageView
                 android:id="@+id/imageView_moviePoster"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="320dp"
                 android:contentDescription="@string/movie_poster"
-                android:src="@drawable/ic_launcher_background"
                 app:layout_constraintBottom_toTopOf="@+id/textView_movieTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +42,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/placeholder"
         app:layout_constraintTop_toBottomOf="@+id/guideline"/>
 
     <TextView
@@ -55,7 +53,6 @@
         android:textSize="16sp"
         android:textColor="@android:color/black"
         android:layout_marginTop="4dp"
-        android:text="@string/placeholder"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintTop_toBottomOf="@+id/textView_movieTitle"/>
@@ -64,7 +61,6 @@
         android:id="@+id/textView_movieGenre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_movieOverview"
         android:layout_marginTop="24dp"
@@ -76,7 +72,6 @@
         android:id="@+id/textView_releaseDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_movieGenre"
         android:layout_marginTop="8dp"
@@ -88,7 +83,6 @@
         android:id="@+id/textView_revenue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_releaseDate"
         android:layout_marginTop="8dp"
@@ -100,7 +94,6 @@
         android:id="@+id/textView_runtime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_revenue"
         android:layout_marginTop="8dp"
@@ -115,6 +108,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:progressTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

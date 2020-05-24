@@ -31,7 +31,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onBindViewHolder(@NonNull final MovieItemViewHolder holder, int position) {
-            MovieListUIModel uiModel = mUIModels.get(position);
+            final MovieListUIModel uiModel = mUIModels.get(position);
             holder.bind(uiModel);
 
         final View bindingRoot = holder.mItemBinding.getRoot();
@@ -39,7 +39,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
                 @Override
                 public void onClick(View view) {
                     IMainActivity iMainActivity = ((IMainActivity)bindingRoot.getContext());
-                    iMainActivity.openDetailsFragment();
+                    iMainActivity.openDetailsFragment(uiModel.getMovieId());
                 }
             });
     }

@@ -21,9 +21,13 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
     }
 
     @Override
-    public void openDetailsFragment() {
+    public void openDetailsFragment(int movieId) {
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, new MovieDetailsFragment());
+        final MovieDetailsFragment fragment = new MovieDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(MovieDetailsFragment.MOVIE_ID_EXTRA, movieId);
+        fragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

@@ -58,7 +58,7 @@ public class RepoImpl implements RemoteRepo {
                 .map(new Function<MovieDetailsResponse, MovieDetailsUIModel>() {
             @Override
             public MovieDetailsUIModel apply(MovieDetailsResponse response) throws Exception {
-                return ObjectMapper.mapMovieDetailsResponseToUImodel(response);
+                return ObjectMapper.mapMovieDetailsResponseToUIModel(response);
             }
         });
     }

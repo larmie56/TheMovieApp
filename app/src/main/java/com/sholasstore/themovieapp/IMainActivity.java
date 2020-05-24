@@ -2,5 +2,5 @@ package com.sholasstore.themovieapp;
 
 public interface IMainActivity {
 
-    void openDetailsFragment();
+    void openDetailsFragment(int movieId);
 }

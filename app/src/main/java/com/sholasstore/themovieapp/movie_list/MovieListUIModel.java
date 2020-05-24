@@ -4,10 +4,12 @@ public class MovieListUIModel {
 
     private String posterPath;
     private String title;
+    private int movieId;
 
-    public MovieListUIModel(String posterPath, String title) {
+    public MovieListUIModel(String posterPath, String title, int movieId) {
         this.posterPath = posterPath;
         this.title = title;
+        this.movieId = movieId;
     }
 
     public String getPosterPath() {
@@ -24,5 +26,13 @@ public class MovieListUIModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 }

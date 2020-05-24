@@ -59,7 +59,7 @@ public class MovieDetailsResponse {
     @SerializedName("video")
     private Boolean video;
     @SerializedName("vote_average")
-    private Integer voteAverage;
+    private Float voteAverage;
     @SerializedName("vote_count")
     private Integer voteCount;
     @JsonIgnore
@@ -296,12 +296,12 @@ public class MovieDetailsResponse {
     }
 
     @JsonProperty("vote_average")
-    public Integer getVoteAverage() {
+    public Float getVoteAverage() {
         return voteAverage;
     }
 
     @JsonProperty("vote_average")
-    public void setVoteAverage(Integer voteAverage) {
+    public void setVoteAverage(Float voteAverage) {
         this.voteAverage = voteAverage;
     }
 

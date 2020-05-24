@@ -16,22 +16,22 @@ public class ObjectMapper {
         List<MovieListUIModel> uiModels = new ArrayList<>();
 
         for (MovieResult result: response.getResults()) {
-            uiModels.add(new MovieListUIModel(result.getPosterPath(), result.getTitle()));
+            uiModels.add(new MovieListUIModel(result.getPosterPath(), result.getTitle(), result.getId()));
         }
 
         return uiModels;
     }
 
-    public static MovieDetailsUIModel mapMovieDetailsResponseToUImodel(MovieDetailsResponse response) {
-        List<String> genre = new ArrayList<>();
+    public static MovieDetailsUIModel mapMovieDetailsResponseToUIModel(MovieDetailsResponse response) {
+        List<String> genres = new ArrayList<>();
         for (MovieGenre movieGenre: response.getGenres()) {
-            genre.add(movieGenre.getName());
+            genres.add(movieGenre.getName());
         }
 
         return new MovieDetailsUIModel(response.getPosterPath(),
                 response.getTitle(),
                 response.getOverview(),
-                genre,
+                genres,
                 response.getReleaseDate(),
                 response.getRevenue(),
                 response.getRuntime());
