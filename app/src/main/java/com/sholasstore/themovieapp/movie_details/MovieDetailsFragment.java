@@ -11,9 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.StringUtil;
 import com.sholasstore.themovieapp.databinding.FragmentMovieDetailsBinding;
+import com.sholasstore.themovieapp.repo.RepoImpl;
+
+import javax.inject.Inject;
 
 public class MovieDetailsFragment extends Fragment implements MovieDetailsContract.View {
     public static String MOVIE_ID_EXTRA = "movie_id_extra";
@@ -21,6 +23,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
     private FragmentMovieDetailsBinding mBinding;
     private MovieDetailsPresenter mPresenter;
     private int movieId;
+    @Inject RepoImpl mRepo;
 
     @Nullable
     @Override
@@ -36,7 +39,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
             movieId = bundle.getInt(MOVIE_ID_EXTRA);
         }
 
-        mPresenter = new MovieDetailsPresenter(this, App.getRepo());
+        mPresenter = new MovieDetailsPresenter(this, mRepo);
 
         mPresenter.fetchData(movieId);
     }

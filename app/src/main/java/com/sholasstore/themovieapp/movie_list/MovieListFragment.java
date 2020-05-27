@@ -14,9 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.databinding.FragmentMovieListBinding;
+import com.sholasstore.themovieapp.repo.RepoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class MovieListFragment extends Fragment implements MovieListContract.View {
     private RecyclerView mPopularMovieRecyclerView;
@@ -26,6 +29,7 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     private MovieListPresenter mPresenter;
     private ProgressBar mProgressBar;
     private List<MovieListUIModel>[] mUiModelsArray;
+    @Inject RepoImpl mRepo;
 
     @Nullable
     @Override
@@ -37,7 +41,7 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter = new MovieListPresenter(App.getRepo(), this);
+        mPresenter = new MovieListPresenter(mRepo, this);
         mPresenter.attachView(this);
         mPopularMovieRecyclerView = mBinding.recyclerViewPopularMovies;
         mTopMovieRecyclerView = mBinding.recyclerViewTopMovies;
