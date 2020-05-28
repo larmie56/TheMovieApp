@@ -1,8 +1,6 @@
-package com.sholasstore.themovieapp.movie_list;
+package com.sholasstore.themovieapp.movie_details_fragment;
 
 import com.sholasstore.themovieapp.repo.RepoImpl;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -12,36 +10,32 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MovieListPresenter implements MovieListContract.Presenter {
+public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
+    private MovieDetailsContract.View mView;
     private RepoImpl mRepo;
-    private MovieListContract.View mView;
     private Disposable mDisposable;
 
     @Inject
-    MovieListPresenter(RepoImpl repo) {
+    MovieDetailsPresenter(RepoImpl repo) {
         mRepo = repo;
     }
 
     @Override
-    public void fetchData() {
-
+    public void fetchData(int movieId) {
         mView.showLoading();
 
-        mDisposable = mRepo.getPopularMovies(1)
-                .mergeWith(mRepo.getTopRatedMovies(1))
-                .mergeWith(mRepo.getUpcomingMovies(1))
-                .subscribeOn(Schedulers.io())
+        mDisposable = mRepo.getMovieDetails(movieId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate(new Action() {
                     @Override
                     public void run() throws Exception {
                         mView.hideLoading();
-                        mView.showData();
                     }
-                }).subscribe(new Consumer<List<MovieListUIModel>>() {
+                })
+                .subscribe(new Consumer<MovieDetailsUIModel>() {
                     @Override
-                    public void accept(List<MovieListUIModel> uiModels) throws Exception {
-                        mView.submitList(uiModels);
+                    public void accept(MovieDetailsUIModel movieDetailsUIModel) throws Exception {
+                        mView.showMovieDetails(movieDetailsUIModel);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -49,18 +43,16 @@ public class MovieListPresenter implements MovieListContract.Presenter {
                         mView.showError(throwable);
                     }
                 });
-
     }
 
     @Override
-    public void attachView(MovieListContract.View view) {
+    public void attachView(MovieDetailsContract.View view) {
         mView = view;
     }
 
     @Override
     public void detachView() {
         mView = null;
-        mRepo = null;
         if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }

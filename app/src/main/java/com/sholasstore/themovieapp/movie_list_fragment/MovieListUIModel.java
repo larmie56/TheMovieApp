@@ -1,4 +1,4 @@
-package com.sholasstore.themovieapp.movie_list;
+package com.sholasstore.themovieapp.movie_list_fragment;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

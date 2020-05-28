@@ -6,8 +6,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.sholasstore.themovieapp.movie_details.MovieDetailsUIModel;
-import com.sholasstore.themovieapp.movie_list.MovieListUIModel;
+import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsUIModel;
+import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
 
 import java.util.List;
 

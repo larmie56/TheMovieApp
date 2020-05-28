@@ -4,8 +4,8 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.sholasstore.themovieapp.movie_details.MovieDetailsUIModel;
-import com.sholasstore.themovieapp.movie_list.MovieListUIModel;
+import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsUIModel;
+import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
 
 @Database(entities = {MovieListUIModel.class, MovieDetailsUIModel.class}, exportSchema = false, version = 1)
 @TypeConverters(value = {MovieGenreTypeConverter.class})

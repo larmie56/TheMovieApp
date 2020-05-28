@@ -4,8 +4,8 @@ import com.sholasstore.themovieapp.model.movie_details.MovieGenre;
 import com.sholasstore.themovieapp.model.movie_list.MovieListResponse;
 import com.sholasstore.themovieapp.model.movie_list.MovieResult;
 import com.sholasstore.themovieapp.model.movie_details.MovieDetailsResponse;
-import com.sholasstore.themovieapp.movie_details.MovieDetailsUIModel;
-import com.sholasstore.themovieapp.movie_list.MovieListUIModel;
+import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsUIModel;
+import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
 
 import java.util.ArrayList;
 import java.util.List;

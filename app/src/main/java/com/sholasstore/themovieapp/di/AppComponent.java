@@ -1,8 +1,8 @@
 package com.sholasstore.themovieapp.di;
 
 import com.sholasstore.themovieapp.main_activity.MainActivity;
-import com.sholasstore.themovieapp.movie_details.MovieDetailsFragment;
-import com.sholasstore.themovieapp.movie_list.MovieListFragment;
+import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsFragment;
+import com.sholasstore.themovieapp.movie_list_fragment.MovieListFragment;
 
 import javax.inject.Singleton;
 

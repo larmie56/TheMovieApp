@@ -8,8 +8,8 @@ import android.os.Bundle;
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.R;
 import com.sholasstore.themovieapp.di.AppComponent;
-import com.sholasstore.themovieapp.movie_details.MovieDetailsFragment;
-import com.sholasstore.themovieapp.movie_list.MovieListFragment;
+import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsFragment;
+import com.sholasstore.themovieapp.movie_list_fragment.MovieListFragment;
 
 import javax.inject.Inject;
 

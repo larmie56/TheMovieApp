@@ -1,4 +1,4 @@
-package com.sholasstore.themovieapp.movie_list;
+package com.sholasstore.themovieapp.movie_list_fragment;
 
 import com.sholasstore.themovieapp.base_mvp.BasePresenter;
 import com.sholasstore.themovieapp.base_mvp.BaseView;

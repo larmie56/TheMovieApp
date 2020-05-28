@@ -1,4 +1,4 @@
-package com.sholasstore.themovieapp.movie_details;
+package com.sholasstore.themovieapp.movie_details_fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
