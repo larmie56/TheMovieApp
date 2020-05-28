@@ -9,14 +9,21 @@ import com.sholasstore.themovieapp.di.NetworkModule;
 
 public class App extends Application {
 
+    private AppComponent mAppComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
-        AppComponent appComponent = DaggerAppComponent
+        mAppComponent = DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(this))
                 .networkModule(new NetworkModule())
                 .build();
     }
+
+    public AppComponent getAppComponent() {
+        return mAppComponent;
+    }
+
 }

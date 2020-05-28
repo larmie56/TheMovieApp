@@ -1,7 +1,8 @@
 package com.sholasstore.themovieapp.movie_details;
 
-import com.sholasstore.themovieapp.movie_list.MovieListContract;
 import com.sholasstore.themovieapp.repo.RepoImpl;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -14,8 +15,8 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     private RepoImpl mRepo;
     private Disposable mDisposable;
 
-    MovieDetailsPresenter(MovieDetailsContract.View view, RepoImpl repo) {
-        mView = view;
+    @Inject
+    MovieDetailsPresenter(RepoImpl repo) {
         mRepo = repo;
     }
 

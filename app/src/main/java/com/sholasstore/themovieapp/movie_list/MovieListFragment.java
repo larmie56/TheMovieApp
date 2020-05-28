@@ -26,9 +26,9 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     private RecyclerView mTopMovieRecyclerView;
     private RecyclerView mUpcomingMovieRecyclerView;
     private FragmentMovieListBinding mBinding;
-    private MovieListPresenter mPresenter;
     private ProgressBar mProgressBar;
     private List<MovieListUIModel>[] mUiModelsArray;
+    @Inject MovieListPresenter mPresenter;
     @Inject RepoImpl mRepo;
 
     @Nullable
@@ -41,7 +41,8 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter = new MovieListPresenter(mRepo, this);
+        App app = (App) getActivity().getApplication();
+        app.getAppComponent().injectIntoMovieListFragment(this);
         mPresenter.attachView(this);
         mPopularMovieRecyclerView = mBinding.recyclerViewPopularMovies;
         mTopMovieRecyclerView = mBinding.recyclerViewTopMovies;
@@ -59,15 +60,21 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     }
 
     @Override
-    public void submitList(List<MovieListUIModel> uiModel) {
+    public void submitList(List<MovieListUIModel> uiModels) {
         if (mUiModelsArray[0].isEmpty()) {
-            mUiModelsArray[0] = uiModel;
+            mUiModelsArray[0] = uiModels;
+            for (MovieListUIModel uiModel : uiModels)
+                uiModel.setFlag(0);
         }
         else if (mUiModelsArray[1].isEmpty()) {
-            mUiModelsArray[1] = uiModel;
+            mUiModelsArray[1] = uiModels;
+            for (MovieListUIModel uiModel : uiModels)
+                uiModel.setFlag(1);
         }
         else {
-            mUiModelsArray[2] = uiModel;
+            mUiModelsArray[2] = uiModels;
+            for (MovieListUIModel uiModel : uiModels)
+                uiModel.setFlag(2);
         }
     }
 

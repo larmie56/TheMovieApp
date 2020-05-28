@@ -2,8 +2,9 @@ package com.sholasstore.themovieapp.movie_list;
 
 import com.sholasstore.themovieapp.repo.RepoImpl;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -16,9 +17,9 @@ public class MovieListPresenter implements MovieListContract.Presenter {
     private MovieListContract.View mView;
     private Disposable mDisposable;
 
-    MovieListPresenter(RepoImpl repo, MovieListContract.View view) {
+    @Inject
+    MovieListPresenter(RepoImpl repo) {
         mRepo = repo;
-        mView = view;
     }
 
     @Override

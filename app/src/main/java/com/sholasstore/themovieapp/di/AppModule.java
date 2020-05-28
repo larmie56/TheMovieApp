@@ -3,8 +3,7 @@ package com.sholasstore.themovieapp.di;
 import android.app.Application;
 import android.content.Context;
 
-import com.sholasstore.themovieapp.Service;
-import com.sholasstore.themovieapp.repo.RepoImpl;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -18,12 +17,8 @@ public class AppModule {
     }
 
     @Provides
+    @Singleton
     public Context providesContext() {
         return mApplication;
-    }
-
-    @Provides
-    public RepoImpl provideRepoImpl(Service service) {
-        return new RepoImpl(service);
     }
 }

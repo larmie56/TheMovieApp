@@ -1,7 +1,7 @@
 package com.sholasstore.themovieapp.repo;
 
+import com.sholasstore.themovieapp.MovieService;
 import com.sholasstore.themovieapp.ObjectMapper;
-import com.sholasstore.themovieapp.Service;
 import com.sholasstore.themovieapp.model.movie_details.MovieDetailsResponse;
 import com.sholasstore.themovieapp.model.movie_list.MovieListResponse;
 import com.sholasstore.themovieapp.movie_details.MovieDetailsUIModel;
@@ -9,19 +9,22 @@ import com.sholasstore.themovieapp.movie_list.MovieListUIModel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
 public class RepoImpl implements RemoteRepo {
-    private Service mService;
+    private MovieService mMovieService;
 
-    public RepoImpl(Service service) {
-        mService = service;
+    @Inject
+    public RepoImpl(MovieService movieService) {
+        mMovieService = movieService;
     }
 
     @Override
     public Single<List<MovieListUIModel>> getPopularMovies(int page) {
-        return mService.getPopularMovies(page)
+        return mMovieService.getPopularMovies(page)
                 .map(new Function<MovieListResponse, List<MovieListUIModel>>() {
             @Override
             public List<MovieListUIModel> apply(MovieListResponse response) {
@@ -32,7 +35,7 @@ public class RepoImpl implements RemoteRepo {
 
     @Override
     public Single<List<MovieListUIModel>> getTopRatedMovies(int page) {
-        return mService.getTopRatedMovies(page)
+        return mMovieService.getTopRatedMovies(page)
                 .map(new Function<MovieListResponse, List<MovieListUIModel>>() {
             @Override
             public List<MovieListUIModel> apply(MovieListResponse response) {
@@ -43,7 +46,7 @@ public class RepoImpl implements RemoteRepo {
 
     @Override
     public Single<List<MovieListUIModel>> getUpcomingMovies(int page) {
-        return mService.getUpcomingMovies(page)
+        return mMovieService.getUpcomingMovies(page)
                 .map(new Function<MovieListResponse, List<MovieListUIModel>>() {
             @Override
             public List<MovieListUIModel> apply(MovieListResponse response) {
@@ -54,7 +57,7 @@ public class RepoImpl implements RemoteRepo {
 
     @Override
     public Single<MovieDetailsUIModel> getMovieDetails(int movieId) {
-        return mService.getMovieDetails(movieId)
+        return mMovieService.getMovieDetails(movieId)
                 .map(new Function<MovieDetailsResponse, MovieDetailsUIModel>() {
             @Override
             public MovieDetailsUIModel apply(MovieDetailsResponse response) throws Exception {

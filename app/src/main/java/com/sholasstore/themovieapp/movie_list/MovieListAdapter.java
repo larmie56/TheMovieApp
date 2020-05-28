@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.sholasstore.themovieapp.IMainActivity;
+import com.sholasstore.themovieapp.main_activity.IMainActivity;
 import com.sholasstore.themovieapp.StringUtil;
 import com.sholasstore.themovieapp.databinding.MovieListItemBinding;
 
@@ -39,7 +39,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
                 @Override
                 public void onClick(View view) {
                     IMainActivity iMainActivity = ((IMainActivity)bindingRoot.getContext());
-                    iMainActivity.openDetailsFragment(uiModel.getMovieId());
+                    iMainActivity.recyclerRowItemClicked(uiModel.getMovieId());
                 }
             });
     }

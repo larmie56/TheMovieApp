@@ -1,16 +1,37 @@
 package com.sholasstore.themovieapp.movie_details;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.sholasstore.themovieapp.room.MovieGenreTypeConverter;
+
 import java.util.List;
 
+//Database Entity Class
+@Entity(tableName = "movie_details")
 public class MovieDetailsUIModel {
 
     private String posterPath;
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "movie_title")
     private String movieTitle;
+    @ColumnInfo(name = "movie_overview")
     private String movieOverview;
+    @ColumnInfo(name = "movie_genres")
+    @TypeConverters(value = {MovieGenreTypeConverter.class})
     private List<String> movieGenres;
+    @ColumnInfo(name = "release_date")
     private String releaseDate;
+    @ColumnInfo(name = "_revenue")
     private int revenue;
+    @ColumnInfo(name = "_runtime")
     private int  runtime;
+    @ColumnInfo(name = "movie_id")
+    private int movieId;
 
     public MovieDetailsUIModel(String posterPath, String movieTitle, String movieOverview, List<String> movieGenres, String releaseDate, int revenue, int runtime) {
         this.posterPath = posterPath;
@@ -76,5 +97,13 @@ public class MovieDetailsUIModel {
 
     public void setRuntime(int runtime) {
         this.runtime = runtime;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 }

@@ -1,11 +1,13 @@
 package com.sholasstore.themovieapp.di;
 
 import com.sholasstore.themovieapp.BuildConfig;
-import com.sholasstore.themovieapp.Service;
+import com.sholasstore.themovieapp.MovieService;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,12 +25,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     @Provides
-    public Service providesApi(Retrofit retrofit) {
-        return retrofit.create(Service.class);
+    @Singleton
+    public static MovieService providesApi(Retrofit retrofit) {
+        return retrofit.create(MovieService.class);
     }
 
     @Provides
-    public Retrofit providesRetrofit(OkHttpClient okHttpClient) {
+    static Retrofit providesRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -38,7 +41,7 @@ public class NetworkModule {
     }
 
     @Provides
-    public OkHttpClient providesOkHttpClient(
+    static OkHttpClient providesOkHttpClient(
             @LoggingInterceptor Interceptor loggingInterceptor,
             @RequestInterceptor Interceptor requestInterceptor
             ) {
@@ -50,7 +53,7 @@ public class NetworkModule {
 
     @Provides
     @LoggingInterceptor
-    public Interceptor providesLoggingInterceptor() {
+    static Interceptor providesLoggingInterceptor() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return interceptor;
@@ -58,7 +61,7 @@ public class NetworkModule {
 
     @Provides
     @RequestInterceptor
-    public Interceptor providesRequestInterceptor() {
+    static Interceptor providesRequestInterceptor() {
         return new Interceptor() {
             @NotNull
             @Override

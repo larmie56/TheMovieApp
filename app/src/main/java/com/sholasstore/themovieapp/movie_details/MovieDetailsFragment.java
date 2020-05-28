@@ -21,8 +21,8 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
     public static String MOVIE_ID_EXTRA = "movie_id_extra";
 
     private FragmentMovieDetailsBinding mBinding;
-    private MovieDetailsPresenter mPresenter;
     private int movieId;
+    @Inject MovieDetailsPresenter mPresenter;
     @Inject RepoImpl mRepo;
 
     @Nullable
@@ -39,13 +39,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
             movieId = bundle.getInt(MOVIE_ID_EXTRA);
         }
 
-        mPresenter = new MovieDetailsPresenter(this, mRepo);
-
+        mPresenter.attachView(this);
         mPresenter.fetchData(movieId);
     }
 
     @Override
     public void showMovieDetails(MovieDetailsUIModel uiModel) {
+        uiModel.setMovieId(movieId);
         Glide.with(mBinding.getRoot().getContext())
                 .load(StringUtil.appendBaseImageUrl(uiModel.getPosterPath()))
                 .into(mBinding.imageViewMoviePoster);
