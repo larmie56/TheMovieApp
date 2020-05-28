@@ -28,9 +28,18 @@ public class StringUtil {
     }
 
     public static String formatRevenue(int revenue) {
-        // TODO: 5/24/2020 : Add commas between each three characters in the revenue String
+        final String revenueString = String.valueOf(revenue);
+        StringBuffer revenueStringBuffer = new StringBuffer(revenueString);
+        int revenueStringLength = revenueString.length();
 
-        return "Movie revenue: " + revenue;
+        while (revenueStringLength > 3) {
+            revenueStringLength -= 3;
+            revenueStringBuffer.insert(revenueStringLength, ',');
+        }
+
+        String formattedRevenueString = revenueStringBuffer.toString();
+
+        return "Movie revenue: $" + formattedRevenueString;
     }
 
     public static String formatMovieRuntime(int runtime) {

@@ -1,6 +1,7 @@
 package com.sholasstore.themovieapp.di;
 
 import com.sholasstore.themovieapp.main_activity.MainActivity;
+import com.sholasstore.themovieapp.movie_details.MovieDetailsFragment;
 import com.sholasstore.themovieapp.movie_list.MovieListFragment;
 
 import javax.inject.Singleton;
@@ -13,4 +14,5 @@ public interface AppComponent {
 
     void inject(MainActivity mainActivity);
     void injectIntoMovieListFragment(MovieListFragment movieListFragment);
+    void injectIntoMovieDetailsFragment(MovieDetailsFragment movieDetailsFragment);
 }

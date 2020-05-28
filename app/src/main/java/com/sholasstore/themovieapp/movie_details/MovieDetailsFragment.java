@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.StringUtil;
 import com.sholasstore.themovieapp.databinding.FragmentMovieDetailsBinding;
 import com.sholasstore.themovieapp.repo.RepoImpl;
@@ -39,6 +40,8 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
             movieId = bundle.getInt(MOVIE_ID_EXTRA);
         }
 
+        App app = (App) getActivity().getApplication();
+        app.getAppComponent().injectIntoMovieDetailsFragment(this);
         mPresenter.attachView(this);
         mPresenter.fetchData(movieId);
     }
