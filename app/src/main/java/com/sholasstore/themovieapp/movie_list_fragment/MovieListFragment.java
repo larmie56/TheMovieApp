@@ -28,7 +28,7 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     private FragmentMovieListBinding mBinding;
     private ProgressBar mProgressBar;
     private List<MovieListUIModel>[] mUiModelsArray;
-    @Inject MovieListPresenter mPresenter;
+    @Inject MovieListContract.Presenter mPresenter;
     @Inject RepoImpl mRepo;
 
     @Nullable
@@ -42,7 +42,7 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         App app = (App) getActivity().getApplication();
-        app.getAppComponent().injectIntoMovieListFragment(this);
+        app.getAppComponent().plusMovieList().inject(this);
         mPresenter.attachView(this);
         mPopularMovieRecyclerView = mBinding.recyclerViewPopularMovies;
         mTopMovieRecyclerView = mBinding.recyclerViewTopMovies;

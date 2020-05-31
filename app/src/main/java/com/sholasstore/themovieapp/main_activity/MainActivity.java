@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.R;
 import com.sholasstore.themovieapp.di.AppComponent;
+import com.sholasstore.themovieapp.di.MainActivityModule;
 import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsFragment;
 import com.sholasstore.themovieapp.movie_list_fragment.MovieListFragment;
 
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity implements IMainActivity, Ma
         App app = (App) getApplication();
         AppComponent appComponent = app.getAppComponent();
 
-        appComponent.inject(this);
+        appComponent.plusMainActivity(new MainActivityModule(this))
+                .inject(this);
 
         mPresenter.attachView(this);
 

@@ -23,7 +23,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
 
     private FragmentMovieDetailsBinding mBinding;
     private int movieId;
-    @Inject MovieDetailsPresenter mPresenter;
+    @Inject MovieDetailsContract.Presenter mPresenter;
     @Inject RepoImpl mRepo;
 
     @Nullable
@@ -41,7 +41,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
         }
 
         App app = (App) getActivity().getApplication();
-        app.getAppComponent().injectIntoMovieDetailsFragment(this);
+        app.getAppComponent().plusMovieDetails().inject(this);
         mPresenter.attachView(this);
         mPresenter.fetchData(movieId);
     }

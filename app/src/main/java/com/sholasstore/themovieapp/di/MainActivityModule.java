@@ -1,9 +1,8 @@
 package com.sholasstore.themovieapp.di;
 
-import com.sholasstore.themovieapp.main_activity.MainActivityContract;
-import com.sholasstore.themovieapp.main_activity.MainActivityPresenter;
+import android.content.Context;
 
-import javax.inject.Singleton;
+import com.sholasstore.themovieapp.main_activity.MainActivity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,9 +10,14 @@ import dagger.Provides;
 @Module
 public class MainActivityModule {
 
+    private MainActivity mMainActivity;
+
+    public MainActivityModule(MainActivity mainActivity) {
+        mMainActivity = mainActivity;
+    }
+
     @Provides
-    @Singleton
-    public MainActivityContract.Presenter providesPresenter() {
-        return new MainActivityPresenter();
+    public Context providesContext() {
+        return mMainActivity;
     }
 }

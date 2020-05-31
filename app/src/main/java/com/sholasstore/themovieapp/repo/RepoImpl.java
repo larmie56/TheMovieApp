@@ -10,6 +10,7 @@ import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Function;

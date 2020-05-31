@@ -1,5 +1,6 @@
 package com.sholasstore.themovieapp.movie_list_fragment;
 
+import com.sholasstore.themovieapp.di.MovieListScope;
 import com.sholasstore.themovieapp.repo.RepoImpl;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+@MovieListScope
 public class MovieListPresenter implements MovieListContract.Presenter {
     private RepoImpl mRepo;
     private MovieListContract.View mView;

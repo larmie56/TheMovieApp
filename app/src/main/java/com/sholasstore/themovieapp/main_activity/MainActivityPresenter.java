@@ -1,8 +1,13 @@
 package com.sholasstore.themovieapp.main_activity;
 
+import javax.inject.Inject;
+
 public class MainActivityPresenter implements MainActivityContract.Presenter {
 
     private MainActivityContract.View mView;
+
+    @Inject
+    public MainActivityPresenter(){}
 
     @Override
     public void attachView(MainActivityContract.View view) {
