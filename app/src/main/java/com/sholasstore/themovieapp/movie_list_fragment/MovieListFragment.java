@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.databinding.FragmentMovieListBinding;
-import com.sholasstore.themovieapp.repo.RepoImpl;
+import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,8 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     private ProgressBar mProgressBar;
     private List<MovieListUIModel>[] mUiModelsArray;
     @Inject MovieListContract.Presenter mPresenter;
-    @Inject RepoImpl mRepo;
+    @Inject
+    RemoteRepoImpl mRepo;
 
     @Nullable
     @Override

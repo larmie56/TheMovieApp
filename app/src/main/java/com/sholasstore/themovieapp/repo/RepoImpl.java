@@ -1,69 +1,69 @@
 package com.sholasstore.themovieapp.repo;
 
-import com.sholasstore.themovieapp.MovieService;
-import com.sholasstore.themovieapp.ObjectMapper;
-import com.sholasstore.themovieapp.model.movie_details.MovieDetailsResponse;
-import com.sholasstore.themovieapp.model.movie_list.MovieListResponse;
+import androidx.annotation.NonNull;
+
+import com.sholasstore.themovieapp.di.MovieDetailsBinders;
 import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsUIModel;
 import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
 
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.reactivex.functions.Function;
+import io.reactivex.SingleSource;
+import io.reactivex.functions.Consumer;
 
-public class RepoImpl implements RemoteRepo {
-    private MovieService mMovieService;
+public class RepoImpl {
+
+    private LocalRepo mLocalRepo;
+    private RemoteRepo mRemoteRepo;
 
     @Inject
-    public RepoImpl(MovieService movieService) {
-        mMovieService = movieService;
+    public RepoImpl(RemoteRepoImpl remoteRepo, LocalRepoImpl localRepo) {
+        mRemoteRepo = remoteRepo;
+        mLocalRepo = localRepo;
     }
 
-    @Override
-    public Single<List<MovieListUIModel>> getPopularMovies(int page) {
-        return mMovieService.getPopularMovies(page)
-                .map(new Function<MovieListResponse, List<MovieListUIModel>>() {
-            @Override
-            public List<MovieListUIModel> apply(MovieListResponse response) {
-                return ObjectMapper.mapMovieListResponseToUIModel(response);
-            }
-        });
+    public Single<List<MovieListUIModel>> getPopularMovies() {
+        return mLocalRepo.getPopularMovies()
+                .onErrorResumeNext(mRemoteRepo.getPopularMovies(1))
+                .doAfterSuccess(new Consumer<List<MovieListUIModel>>() {
+                    @Override
+                    public void accept(List<MovieListUIModel> movieListUIModels) throws Exception {
+                        mLocalRepo.insertMovieList(movieListUIModels);
+                    }
+                });
     }
 
-    @Override
-    public Single<List<MovieListUIModel>> getTopRatedMovies(int page) {
-        return mMovieService.getTopRatedMovies(page)
-                .map(new Function<MovieListResponse, List<MovieListUIModel>>() {
-            @Override
-            public List<MovieListUIModel> apply(MovieListResponse response) {
-                return ObjectMapper.mapMovieListResponseToUIModel(response);
-            }
-        });
+    public Single<List<MovieListUIModel>> getTopMovies() {
+        return mLocalRepo.getTopMovies()
+                .onErrorResumeNext(mRemoteRepo.getTopRatedMovies(1))
+                .doOnSuccess(new Consumer<List<MovieListUIModel>>() {
+                    @Override
+                    public void accept(List<MovieListUIModel> movieListUIModels) throws Exception {
+                        mLocalRepo.insertMovieList(movieListUIModels);
+                    }
+                });
     }
 
-    @Override
-    public Single<List<MovieListUIModel>> getUpcomingMovies(int page) {
-        return mMovieService.getUpcomingMovies(page)
-                .map(new Function<MovieListResponse, List<MovieListUIModel>>() {
-            @Override
-            public List<MovieListUIModel> apply(MovieListResponse response) {
-                return ObjectMapper.mapMovieListResponseToUIModel(response);
-            }
-        });
+    public Single<List<MovieListUIModel>> getUpcomingMovies() {
+        return mLocalRepo.getTopMovies()
+                .onErrorResumeNext(mRemoteRepo.getUpcomingMovies(1))
+                .doOnSuccess(new Consumer<List<MovieListUIModel>>() {
+                    @Override
+                    public void accept(List<MovieListUIModel> movieListUIModels) throws Exception {
+                        mLocalRepo.insertMovieList(movieListUIModels);
+                    }
+                });
     }
 
-    @Override
-    public Single<MovieDetailsUIModel> getMovieDetails(int movieId) {
-        return mMovieService.getMovieDetails(movieId)
-                .map(new Function<MovieDetailsResponse, MovieDetailsUIModel>() {
-            @Override
-            public MovieDetailsUIModel apply(MovieDetailsResponse response) throws Exception {
-                return ObjectMapper.mapMovieDetailsResponseToUIModel(response);
-            }
-        });
+    public MovieDetailsUIModel getMovieDetails(int movieId) {
+        return mLocalRepo.getMovieDetails(movieId);
     }
 }

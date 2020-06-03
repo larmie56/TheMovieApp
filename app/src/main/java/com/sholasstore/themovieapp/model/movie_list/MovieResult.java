@@ -57,7 +57,6 @@ public class MovieResult {
     public Integer getVoteCount() {
         return voteCount;
     }
-
     @JsonProperty("vote_count")
     public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;

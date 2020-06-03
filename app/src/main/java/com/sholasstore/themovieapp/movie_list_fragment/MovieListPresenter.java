@@ -1,7 +1,7 @@
 package com.sholasstore.themovieapp.movie_list_fragment;
 
 import com.sholasstore.themovieapp.di.MovieListScope;
-import com.sholasstore.themovieapp.repo.RepoImpl;
+import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ import io.reactivex.schedulers.Schedulers;
 
 @MovieListScope
 public class MovieListPresenter implements MovieListContract.Presenter {
-    private RepoImpl mRepo;
+    private RemoteRepoImpl mRepo;
     private MovieListContract.View mView;
     private Disposable mDisposable;
 
     @Inject
-    MovieListPresenter(RepoImpl repo) {
+    MovieListPresenter(RemoteRepoImpl repo) {
         mRepo = repo;
     }
 
@@ -29,6 +29,8 @@ public class MovieListPresenter implements MovieListContract.Presenter {
 
         mView.showLoading();
 
+        //Calling subscribeOn() once makes all the api get calls on a single background thread
+        //Call subscribeOn() after each api get call to make each api get call on different background threads
         mDisposable = mRepo.getPopularMovies(1)
                 .mergeWith(mRepo.getTopRatedMovies(1))
                 .mergeWith(mRepo.getUpcomingMovies(1))

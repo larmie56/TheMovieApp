@@ -12,18 +12,19 @@ import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface MovieDao {
 
     @Query("SELECT * FROM movie_list WHERE _flag = 0 LIMIT 30")
-    Flowable<List<MovieListUIModel>> getPopularMovieList();
+    Single<List<MovieListUIModel>> getPopularMovieList();
 
     @Query("SELECT * FROM movie_list WHERE _flag = 1 LIMIT 30")
-    Flowable<List<MovieListUIModel>> getTopMovieList();
+    Single<List<MovieListUIModel>> getTopMovieList();
 
     @Query("SELECT * FROM movie_list WHERE _flag = 2 LIMIT 30")
-    Flowable<List<MovieListUIModel>> getUpcomingMovieList();
+    Single<List<MovieListUIModel>> getUpcomingMovieList();
 
     @Query("SELECT * FROM movie_details WHERE movie_id = :movieId LIMIT 1 ")
     MovieDetailsUIModel getMovieDetails(int movieId);

@@ -1,6 +1,6 @@
 package com.sholasstore.themovieapp.movie_details_fragment;
 
-import com.sholasstore.themovieapp.repo.RepoImpl;
+import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
 
 import javax.inject.Inject;
 
@@ -12,11 +12,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     private MovieDetailsContract.View mView;
-    private RepoImpl mRepo;
+    private RemoteRepoImpl mRepo;
     private Disposable mDisposable;
 
     @Inject
-    MovieDetailsPresenter(RepoImpl repo) {
+    MovieDetailsPresenter(RemoteRepoImpl repo) {
         mRepo = repo;
     }
 

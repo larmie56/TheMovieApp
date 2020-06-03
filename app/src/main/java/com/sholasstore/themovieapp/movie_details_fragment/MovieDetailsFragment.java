@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.StringUtil;
 import com.sholasstore.themovieapp.databinding.FragmentMovieDetailsBinding;
-import com.sholasstore.themovieapp.repo.RepoImpl;
+import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
 
 import javax.inject.Inject;
 
@@ -24,7 +24,8 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
     private FragmentMovieDetailsBinding mBinding;
     private int movieId;
     @Inject MovieDetailsContract.Presenter mPresenter;
-    @Inject RepoImpl mRepo;
+    @Inject
+    RemoteRepoImpl mRepo;
 
     @Nullable
     @Override
