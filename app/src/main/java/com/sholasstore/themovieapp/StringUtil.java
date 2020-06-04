@@ -13,10 +13,10 @@ public class StringUtil {
     }
 
     public static String formatMovieGenre(List<String> genres) {
-        String formattedGenreString = "";
+        String formattedGenreString = "Genre: ";
 
         for (String genre : genres) {
-            formattedGenreString = "Genre: " + genre + ", ";
+            formattedGenreString = formattedGenreString + genre + ", ";
         }
 
         return formattedGenreString.substring(0, formattedGenreString.length() - 2);
