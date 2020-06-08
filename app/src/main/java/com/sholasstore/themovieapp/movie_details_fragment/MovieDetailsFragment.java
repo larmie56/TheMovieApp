@@ -57,9 +57,9 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
         mBinding.textViewMovieTitle.setText(uiModel.getMovieTitle());
         mBinding.textViewMovieOverview.setText(uiModel.getMovieOverview());
         mBinding.textViewMovieGenre.setText(StringUtil.formatMovieGenre(uiModel.getMovieGenres()));
-        mBinding.textViewReleaseDate.setText(StringUtil.formatReleaseDate(uiModel.getReleaseDate()));
-        mBinding.textViewRevenue.setText(StringUtil.formatRevenue(uiModel.getRevenue()));
-        mBinding.textViewRuntime.setText(StringUtil.formatMovieRuntime(uiModel.getRuntime()));
+        mBinding.textViewReleaseDate.setText(StringUtil.formatReleaseDateString(uiModel.getReleaseDate()));
+        mBinding.textViewRevenue.setText(StringUtil.formatRevenueString(uiModel.getRevenue()));
+        mBinding.textViewRuntime.setText(StringUtil.formatMovieRuntimeInt(uiModel.getRuntime()));
     }
 
     @Override

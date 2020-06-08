@@ -46,6 +46,7 @@ public class ObjectMapperTest {
         List<String> genre = new ArrayList<>();
         genre.add("Sci-Fi");
         genre.add("Thriller");
+        genre.add("Fiction");
 
         assertEquals("The Martian", movieDetailsUIModel.getMovieTitle());
         assertEquals(500000000, movieDetailsUIModel.getRevenue());
@@ -58,8 +59,11 @@ public class ObjectMapperTest {
         sci_fi.setName("Sci-Fi");
         MovieGenre thriller = new MovieGenre();
         thriller.setName("Thriller");
+        MovieGenre fiction = new MovieGenre();
+        fiction.setName("Fiction");
         genre.add(sci_fi);
         genre.add(thriller);
+        genre.add(fiction);
 
         MovieDetailsResponse movieDetailsResponse = new MovieDetailsResponse();
         movieDetailsResponse.setTitle("The Martian");

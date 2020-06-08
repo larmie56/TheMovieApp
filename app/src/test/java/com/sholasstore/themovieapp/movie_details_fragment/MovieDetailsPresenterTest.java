@@ -1,9 +1,9 @@
 package com.sholasstore.themovieapp.movie_details_fragment;
 
-import com.sholasstore.themovieapp.model.movie_details.MovieGenre;
 import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -17,13 +17,12 @@ import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.functions.Function;
-import io.reactivex.observers.TestObserver;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.plugins.RxJavaPlugins;
+import io.reactivex.schedulers.TestScheduler;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,17 +31,30 @@ public class MovieDetailsPresenterTest {
     @Mock RemoteRepoImpl mRemoteRepo;
     @Mock MovieDetailsContract.View mView;
     private MovieDetailsPresenter mMovieDetailsPresenter;
+    private static TestScheduler mIoTestScheduler = new TestScheduler();
+    private static TestScheduler mMainTestScheduler = new TestScheduler();
+
+    @BeforeClass
+    public static void classSetup() {
+        RxJavaPlugins.setIoSchedulerHandler(new Function<Scheduler, Scheduler>() {
+            @Override
+            public Scheduler apply(Scheduler scheduler) throws Exception {
+                return mIoTestScheduler;
+            }
+        });
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
+            @Override
+            public Scheduler apply(Callable<Scheduler> schedulerCallable) throws Exception {
+                return mMainTestScheduler;
+            }
+        });
+    }
+
 
     @Before
     public void setup() {
         mMovieDetailsPresenter = new MovieDetailsPresenter(mRemoteRepo);
         mMovieDetailsPresenter.attachView(mView);
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
-            @Override
-            public Scheduler apply(Callable<Scheduler> schedulerCallable) throws Exception {
-                return Schedulers.trampoline();
-            }
-        });
     }
 
     @Test
@@ -58,27 +70,37 @@ public class MovieDetailsPresenterTest {
     }
 
     @Test
-    public void assert_correctValuesAreReceivedByConsumer() {
+    public void fetchDataSuccessCaseTest() {
         //Arrange
-        when(mRemoteRepo.getMovieDetails(1)).thenReturn(Single.just(getResponse()));
+        MovieDetailsUIModel movieDetailsUIModel = getResponse();
+        when(mRemoteRepo.getMovieDetails(1)).thenReturn(Single.just(movieDetailsUIModel));
 
         //Act
-        TestObserver<MovieDetailsUIModel> testObserver
-                = mRemoteRepo.getMovieDetails(1).test();
+        mMovieDetailsPresenter.fetchData(1);
+        mIoTestScheduler.triggerActions();
+        mMainTestScheduler.triggerActions();
 
         //Assert
-        MovieDetailsUIModel movieDetailsUIModel = testObserver.values().get(0);
-
-        List<String> genre = new ArrayList<>();
-        genre.add("Sci-FI");
-        genre.add("Thriller");
-
-        assertEquals("The Martian", movieDetailsUIModel.getMovieTitle());
-        assertEquals(500000000, movieDetailsUIModel.getRevenue());
-        assertArrayEquals(genre.toArray(), movieDetailsUIModel.getMovieGenres().toArray());
+        verify(mView).showLoading();
+        verify(mView).showMovieDetails(movieDetailsUIModel);
+        verify(mView).hideLoading();
+        verifyNoMoreInteractions(mView);
     }
 
+    @Test
+    public void fetchDataErrorCaseTest() {
+        Throwable error = new Throwable();
+        when(mRemoteRepo.getMovieDetails(1))
+                .thenReturn(Single.<MovieDetailsUIModel>error(error));
 
+        mMovieDetailsPresenter.fetchData(1);
+        mIoTestScheduler.triggerActions();
+        mMainTestScheduler.triggerActions();
+
+        verify(mView).showLoading();
+        verify(mView).showError(error);
+        verify(mView).hideLoading();
+    }
 
     private MovieDetailsUIModel getResponse() {
         List<String> genre = new ArrayList<>();
