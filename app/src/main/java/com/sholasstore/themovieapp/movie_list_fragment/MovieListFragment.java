@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.databinding.FragmentMovieListBinding;
+import com.sholasstore.themovieapp.main_activity.IMainActivity;
 import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
 
 import java.util.ArrayList;
@@ -81,9 +82,9 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
 
     @Override
     public void showData() {
-        MovieListAdapter popularMoviesAdapter = new MovieListAdapter(mUiModelsArray[0]);
-        MovieListAdapter topRatedMoviesAdapter = new MovieListAdapter(mUiModelsArray[1]);
-        MovieListAdapter upcomingMoviesAdapter = new MovieListAdapter(mUiModelsArray[2]);
+        MovieListAdapter popularMoviesAdapter = new MovieListAdapter(mUiModelsArray[0], getActivity(), (IMainActivity) getActivity());
+        MovieListAdapter topRatedMoviesAdapter = new MovieListAdapter(mUiModelsArray[1], getActivity(), (IMainActivity) getActivity());
+        MovieListAdapter upcomingMoviesAdapter = new MovieListAdapter(mUiModelsArray[2], getActivity(), (IMainActivity) getActivity());
 
         mPopularMovieRecyclerView.setAdapter(popularMoviesAdapter);
         mTopMovieRecyclerView.setAdapter(topRatedMoviesAdapter);

@@ -1,5 +1,6 @@
 package com.sholasstore.themovieapp.movie_list_fragment;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,33 +16,28 @@ import com.sholasstore.themovieapp.databinding.MovieListItemBinding;
 import java.util.List;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieItemViewHolder> {
-    private final List<MovieListUIModel> mUIModels;
+    private List<MovieListUIModel> mUIModels;
+    private Context mContext;
+    private IMainActivity mIMainActivity;
 
-    public MovieListAdapter(List<MovieListUIModel> uiModels) {
+    public MovieListAdapter(List<MovieListUIModel> uiModels, Context context, IMainActivity iMainActivity) {
         mUIModels = uiModels;
+        mContext = context;
+        mIMainActivity = iMainActivity;
     }
 
     @NonNull
     @Override
     public MovieItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             final MovieListItemBinding binding =
-                    MovieListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent,false);
+                    MovieListItemBinding.inflate(LayoutInflater.from(mContext), parent,false);
             return new MovieItemViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MovieItemViewHolder holder, int position) {
-            final MovieListUIModel uiModel = mUIModels.get(position);
-            holder.bind(uiModel);
 
-        final View bindingRoot = holder.mItemBinding.getRoot();
-        bindingRoot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    IMainActivity iMainActivity = ((IMainActivity)bindingRoot.getContext());
-                    iMainActivity.recyclerRowItemClicked(uiModel.getMovieId());
-                }
-            });
+        holder.bind(position);
     }
 
     @Override
@@ -49,18 +45,34 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         return mUIModels.size();
     }
 
-    static class MovieItemViewHolder extends RecyclerView.ViewHolder {
+    public void setUIModels(List<MovieListUIModel> uiModels) {
+        mUIModels = uiModels;
+    }
+
+    class MovieItemViewHolder extends RecyclerView.ViewHolder {
         MovieListItemBinding mItemBinding;
+        //IMainActivity mIMainActivity;
 
         MovieItemViewHolder(MovieListItemBinding itemBinding) {
             super(itemBinding.getRoot());
             mItemBinding = itemBinding;
         }
 
-        void bind(MovieListUIModel uiModel) {
-            Glide.with(mItemBinding.getRoot().getContext())
+        void bind(int position) {
+            final View bindingRoot = mItemBinding.getRoot();
+
+            final MovieListUIModel uiModel = mUIModels.get(position);
+
+            Glide.with(bindingRoot.getContext())
                     .load(StringUtil.appendBaseImageUrl(uiModel.getPosterPath()))
                     .into(mItemBinding.imageViewMoviePoster);
+
+            bindingRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mIMainActivity.recyclerRowItemClicked(uiModel.getMovieId());
+                }
+            });
         }
     }
 }
