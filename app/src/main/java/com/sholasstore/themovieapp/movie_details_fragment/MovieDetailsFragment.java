@@ -24,8 +24,6 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
     private FragmentMovieDetailsBinding mBinding;
     private int movieId;
     @Inject MovieDetailsContract.Presenter mPresenter;
-    @Inject
-    RemoteRepoImpl mRepo;
 
     @Nullable
     @Override

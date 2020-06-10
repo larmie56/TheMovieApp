@@ -36,7 +36,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onBindViewHolder(@NonNull final MovieItemViewHolder holder, int position) {
-
         holder.bind(position);
     }
 
@@ -51,7 +50,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     class MovieItemViewHolder extends RecyclerView.ViewHolder {
         MovieListItemBinding mItemBinding;
-        //IMainActivity mIMainActivity;
 
         MovieItemViewHolder(MovieListItemBinding itemBinding) {
             super(itemBinding.getRoot());

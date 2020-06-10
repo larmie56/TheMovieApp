@@ -51,7 +51,6 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/movie_list_item"/>
-        <!--Upcoming Movie-->
         <TextView
             android:id="@+id/textView_upcomingMovies"
             android:layout_width="match_parent"

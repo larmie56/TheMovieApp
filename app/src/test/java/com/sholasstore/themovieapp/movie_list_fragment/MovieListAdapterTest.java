@@ -1,7 +1,6 @@
 package com.sholasstore.themovieapp.movie_list_fragment;
 
 import android.content.Context;
-import android.os.Build;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -72,7 +71,6 @@ public class MovieListAdapterTest {
         movieItemViewHolder.itemView.performClick();
 
         verify(mIMainActivity).recyclerRowItemClicked(2);
-
     }
 
     @Test
@@ -83,7 +81,7 @@ public class MovieListAdapterTest {
 
         int actualItemCount = mMovieListAdapter.getItemCount();
 
-        assertTrue(getUIModels().size() == actualItemCount);
+        assertTrue(uiModels.size() == actualItemCount);
     }
 
 

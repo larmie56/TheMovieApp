@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sholasstore.themovieapp.App;
+import com.sholasstore.themovieapp.R;
 import com.sholasstore.themovieapp.databinding.FragmentMovieListBinding;
 import com.sholasstore.themovieapp.main_activity.IMainActivity;
 import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
@@ -30,8 +31,6 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     private ProgressBar mProgressBar;
     private List<MovieListUIModel>[] mUiModelsArray;
     @Inject MovieListContract.Presenter mPresenter;
-    @Inject
-    RemoteRepoImpl mRepo;
 
     @Nullable
     @Override
@@ -54,9 +53,9 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
         mUiModelsArray[0] = new ArrayList<>();
         mUiModelsArray[1] = new ArrayList<>();
         mUiModelsArray[2] = new ArrayList<>();
-        mBinding.textViewPopularMovies.setText("Popular Movies");
-        mBinding.textViewTopMovies.setText("Top Movies");
-        mBinding.textViewUpcomingMovies.setText("Upcoming Movies");
+        mBinding.textViewPopularMovies.setText(R.string.popular_movies);
+        mBinding.textViewTopMovies.setText(R.string.top_movies);
+        mBinding.textViewUpcomingMovies.setText(R.string.upcoming_movies);
 
         mPresenter.fetchData();
     }
