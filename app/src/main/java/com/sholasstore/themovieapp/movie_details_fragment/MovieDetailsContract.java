@@ -11,5 +11,6 @@ public interface MovieDetailsContract {
 
     interface Presenter extends BasePresenter<View> {
         void fetchData(int movieId);
+        void refresh(int movieId);
     }
 }

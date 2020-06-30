@@ -5,6 +5,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.sholasstore.themovieapp.room.MovieListDbModel.MovieListDbFlag;
+
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -13,16 +15,16 @@ import io.reactivex.Flowable;
 public interface MovieDao {
 
     @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
-    Flowable<List<MovieListDbModel>> getPopularMovieList(String flag);
+    Flowable<List<MovieListDbModel>> getPopularMovieList(MovieListDbFlag flag);
 
     @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
-    Flowable<List<MovieListDbModel>> getTopMovieList(String flag);
+    Flowable<List<MovieListDbModel>> getTopMovieList(MovieListDbFlag flag);
 
     @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
-    Flowable<List<MovieListDbModel>> getUpcomingMovieList(String flag);
+    Flowable<List<MovieListDbModel>> getUpcomingMovieList(MovieListDbFlag flag);
 
     @Query("SELECT * FROM movie_details WHERE movie_id = :movieId LIMIT 1 ")
-    MovieDetailsDbModel getMovieDetails(int movieId);
+    Flowable<MovieDetailsDbModel> getMovieDetails(int movieId);
 
     @Insert(entity = MovieListDbModel.class, onConflict = OnConflictStrategy.REPLACE)
     void insertMovieList(List<MovieListDbModel> movieListDbModels);

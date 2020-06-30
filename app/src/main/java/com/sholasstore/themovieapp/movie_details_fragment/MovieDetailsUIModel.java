@@ -1,11 +1,5 @@
 package com.sholasstore.themovieapp.movie_details_fragment;
 
-import androidx.room.TypeConverters;
-
-import com.sholasstore.themovieapp.room.MovieGenreTypeConverter;
-
-import java.util.List;
-
 public class MovieDetailsUIModel {
 
     private String posterPath;

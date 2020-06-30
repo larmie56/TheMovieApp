@@ -46,14 +46,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
 
     @Override
     public void showMovieDetails(MovieDetailsUIModel uiModel) {
-        //uiModel.setMovieId(movieId);
         Glide.with(mBinding.getRoot().getContext())
                 .load(StringUtil.appendBaseImageUrl(uiModel.getPosterPath()))
                 .into(mBinding.imageViewMoviePoster);
 
         mBinding.textViewMovieTitle.setText(uiModel.getMovieTitle());
         mBinding.textViewMovieOverview.setText(uiModel.getMovieOverview());
-        mBinding.textViewMovieGenre.setText(StringUtil.formatMovieGenre(uiModel.getMovieGenres()));
+        mBinding.textViewMovieGenre.setText(uiModel.getMovieGenres());
         mBinding.textViewReleaseDate.setText(StringUtil.formatReleaseDateString(uiModel.getReleaseDate()));
         mBinding.textViewRevenue.setText(StringUtil.formatRevenueString(uiModel.getRevenue()));
         mBinding.textViewRuntime.setText(StringUtil.formatMovieRuntimeInt(uiModel.getRuntime()));

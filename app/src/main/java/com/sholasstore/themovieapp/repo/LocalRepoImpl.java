@@ -6,6 +6,7 @@ import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
 import com.sholasstore.themovieapp.room.MovieDao;
 import com.sholasstore.themovieapp.room.MovieDetailsDbModel;
 import com.sholasstore.themovieapp.room.MovieListDbModel;
+import com.sholasstore.themovieapp.room.MovieListDbModel.MovieListDbFlag;
 
 import java.util.List;
 
@@ -14,8 +15,6 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 
-
-// TODO: 6/3/2020 Provide a complete implementation for this class
 public class LocalRepoImpl implements LocalRepo {
 
     private MovieDao mMovieDao;
@@ -26,7 +25,7 @@ public class LocalRepoImpl implements LocalRepo {
     }
 
     @Override
-    public Flowable<List<MovieListUIModel>> getPopularMovies(String flag) {
+    public Flowable<List<MovieListUIModel>> getPopularMovies(MovieListDbFlag flag) {
         return mMovieDao.getPopularMovieList(flag)
                 .map(new Function<List<MovieListDbModel>, List<MovieListUIModel>>() {
                     @Override
@@ -37,7 +36,7 @@ public class LocalRepoImpl implements LocalRepo {
     }
 
     @Override
-    public Flowable<List<MovieListUIModel>> getTopMovies(String flag) {
+    public Flowable<List<MovieListUIModel>> getTopMovies(MovieListDbFlag flag) {
         return mMovieDao.getTopMovieList(flag)
                 .map(new Function<List<MovieListDbModel>, List<MovieListUIModel>>() {
                     @Override
@@ -48,7 +47,7 @@ public class LocalRepoImpl implements LocalRepo {
     }
 
     @Override
-    public Flowable<List<MovieListUIModel>> getUpcomingMovies(String flag) {
+    public Flowable<List<MovieListUIModel>> getUpcomingMovies(MovieListDbFlag flag) {
         return mMovieDao.getUpcomingMovieList(flag)
                 .map(new Function<List<MovieListDbModel>, List<MovieListUIModel>>() {
                     @Override
@@ -59,8 +58,14 @@ public class LocalRepoImpl implements LocalRepo {
     }
 
     @Override
-    public MovieDetailsUIModel getMovieDetails(int movieId) {
-        return ObjectMapper.mapMovieDetailsDbModelToUIModel(mMovieDao.getMovieDetails(movieId));
+    public Flowable<MovieDetailsUIModel> getMovieDetails(int movieId) {
+        return mMovieDao.getMovieDetails(movieId)
+                .map(new Function<MovieDetailsDbModel, MovieDetailsUIModel>() {
+                    @Override
+                    public MovieDetailsUIModel apply(MovieDetailsDbModel movieDetailsDbModel) throws Exception {
+                        return ObjectMapper.mapMovieDetailsDbModelToUIModel(movieDetailsDbModel);
+                    }
+                });
     }
 
     @Override

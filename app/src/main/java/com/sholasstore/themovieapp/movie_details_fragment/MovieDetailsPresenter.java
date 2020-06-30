@@ -1,30 +1,34 @@
 package com.sholasstore.themovieapp.movie_details_fragment;
 
+import com.sholasstore.themovieapp.repo.LocalRepoImpl;
 import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     private MovieDetailsContract.View mView;
-    private RemoteRepoImpl mRepo;
-    private Disposable mDisposable;
+    private LocalRepoImpl mLocalRepo;
+    private RemoteRepoImpl mRemoteRepo;
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Inject
-    MovieDetailsPresenter(RemoteRepoImpl repo) {
-        mRepo = repo;
+    MovieDetailsPresenter(RemoteRepoImpl remoteRepo, LocalRepoImpl localRepo) {
+        mRemoteRepo = remoteRepo;
+        mLocalRepo = localRepo;
     }
 
     @Override
     public void fetchData(int movieId) {
         mView.showLoading();
 
-        mDisposable = mRepo.getMovieDetails(movieId).subscribeOn(Schedulers.io())
+        mDisposable.add(mLocalRepo.getMovieDetails(movieId)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate(new Action() {
                     @Override
@@ -42,7 +46,13 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
                     public void accept(Throwable throwable) throws Exception {
                         mView.showError(throwable);
                     }
-                });
+                }));
+    }
+
+    @Override
+    public void refresh(int movieId) {
+        mDisposable.add(mRemoteRepo.getMovieDetails(movieId)
+                .subscribe());
     }
 
     @Override

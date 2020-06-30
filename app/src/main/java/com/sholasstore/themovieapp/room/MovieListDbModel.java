@@ -20,7 +20,7 @@ public class MovieListDbModel {
 
     @PrimaryKey
     @ColumnInfo(name = "_id")
-    private Integer id;
+    private int id;
     @ColumnInfo(name = "movie_title")
     private String title;
     @ColumnInfo(name = "movie_overview")
