@@ -1,16 +1,16 @@
 package com.sholasstore.themovieapp.repo;
 
-import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsUIModel;
-import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
+import com.sholasstore.themovieapp.room.MovieDetailsDbModel;
+import com.sholasstore.themovieapp.room.MovieListDbModel;
 
 import java.util.List;
 
 import io.reactivex.Single;
 
-interface RemoteRepo {
+public interface RemoteRepo {
 
-    Single<List<MovieListUIModel>> getPopularMovies(int page);
-    Single<List<MovieListUIModel>> getTopRatedMovies(int page);
-    Single<List<MovieListUIModel>> getUpcomingMovies(int page);
-    Single<MovieDetailsUIModel> getMovieDetails(int movieId);
+    Single<List<MovieListDbModel>> getPopularMovies(int page);
+    Single<List<MovieListDbModel>> getTopRatedMovies(int page);
+    Single<List<MovieListDbModel>> getUpcomingMovies(int page);
+    Single<MovieDetailsDbModel> getMovieDetails(int movieId);
 }

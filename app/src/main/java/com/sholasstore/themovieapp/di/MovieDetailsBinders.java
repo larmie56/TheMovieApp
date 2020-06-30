@@ -10,5 +10,5 @@ import dagger.Module;
 public abstract class MovieDetailsBinders {
 
     @Binds
-    public abstract MovieDetailsContract.Presenter bindsPresneter(MovieDetailsPresenter presenter);
+    public abstract MovieDetailsContract.Presenter bindsPresenter(MovieDetailsPresenter presenter);
 }

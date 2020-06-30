@@ -4,40 +4,35 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
-
-import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsUIModel;
-import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 
 @Dao
 public interface MovieDao {
 
-    @Query("SELECT * FROM movie_list WHERE _flag = 0 LIMIT 30")
-    Single<List<MovieListUIModel>> getPopularMovieList();
+    @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
+    Flowable<List<MovieListDbModel>> getPopularMovieList(String flag);
 
-    @Query("SELECT * FROM movie_list WHERE _flag = 1 LIMIT 30")
-    Single<List<MovieListUIModel>> getTopMovieList();
+    @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
+    Flowable<List<MovieListDbModel>> getTopMovieList(String flag);
 
-    @Query("SELECT * FROM movie_list WHERE _flag = 2 LIMIT 30")
-    Single<List<MovieListUIModel>> getUpcomingMovieList();
+    @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
+    Flowable<List<MovieListDbModel>> getUpcomingMovieList(String flag);
 
     @Query("SELECT * FROM movie_details WHERE movie_id = :movieId LIMIT 1 ")
-    MovieDetailsUIModel getMovieDetails(int movieId);
+    MovieDetailsDbModel getMovieDetails(int movieId);
 
-    @Insert(entity = MovieListUIModel.class, onConflict = OnConflictStrategy.REPLACE)
-    void insertMovieList(List<MovieListUIModel> movieListUIModels);
+    @Insert(entity = MovieListDbModel.class, onConflict = OnConflictStrategy.REPLACE)
+    void insertMovieList(List<MovieListDbModel> movieListDbModels);
 
-    @Insert(entity = MovieDetailsUIModel.class, onConflict = OnConflictStrategy.REPLACE)
-    void insertMovieDetails(MovieDetailsUIModel movieDetailsUIModel);
+    @Insert(entity = MovieDetailsDbModel.class, onConflict = OnConflictStrategy.REPLACE)
+    void insertMovieDetails(MovieDetailsDbModel movieDetailsUIModel);
 
-    @Update(entity = MovieListUIModel.class, onConflict = OnConflictStrategy.REPLACE)
-    void updateMovieList(List<MovieListUIModel> movieListUIModels);
+    @Query("DELETE FROM movie_list")
+    void clearMovieList();
 
-    @Update(entity = MovieDetailsUIModel.class, onConflict = OnConflictStrategy.REPLACE)
-    void updateMovieDetails(MovieDetailsUIModel movieDetailsUIModel);
+    @Query("DELETE FROM movie_details")
+    void clearMovieDetails();
 }

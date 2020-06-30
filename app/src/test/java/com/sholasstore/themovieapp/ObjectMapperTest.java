@@ -24,7 +24,7 @@ public class ObjectMapperTest {
 
         //Act
         List<MovieListUIModel> movieListUIModels =
-                ObjectMapper.mapMovieListResponseToUIModel(movieListResponse);
+                ObjectMapper.mapMovieListDbModelToUIModel(movieListResponse);
 
         //Assert
         assertEquals("Ad astra", movieListUIModels.get(0).getTitle());
@@ -40,7 +40,7 @@ public class ObjectMapperTest {
 
         //Act
         MovieDetailsUIModel movieDetailsUIModel =
-                ObjectMapper.mapMovieDetailsResponseToUIModel(movieDetailsResponse);
+                ObjectMapper.mapMovieDetailsDbModelToUIModel(movieDetailsResponse);
 
         //Assert
         List<String> genre = new ArrayList<>();

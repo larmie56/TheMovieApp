@@ -7,7 +7,7 @@ import com.sholasstore.themovieapp.di.AppModule;
 import com.sholasstore.themovieapp.di.DaggerAppComponent;
 import com.sholasstore.themovieapp.di.NetworkModule;
 
-public class App extends Application {
+public class App extends Application implements IApp {
 
     private AppComponent mAppComponent;
 
@@ -24,6 +24,11 @@ public class App extends Application {
 
     public AppComponent getAppComponent() {
         return mAppComponent;
+    }
+
+    @Override
+    public App getApplication() {
+        return this;
     }
 
 }

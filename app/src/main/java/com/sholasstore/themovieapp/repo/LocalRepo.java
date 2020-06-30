@@ -2,18 +2,23 @@ package com.sholasstore.themovieapp.repo;
 
 import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsUIModel;
 import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
+import com.sholasstore.themovieapp.room.MovieDetailsDbModel;
+import com.sholasstore.themovieapp.room.MovieListDbModel;
+import com.sholasstore.themovieapp.room.MovieListDbModel.MovieListDbFlag;
 
 import java.util.List;
 
-import io.reactivex.Single;
+import io.reactivex.Flowable;
 
 public interface LocalRepo {
 
-    Single<List<MovieListUIModel>> getPopularMovies();
-    Single<List<MovieListUIModel>> getTopMovies();
-    Single<List<MovieListUIModel>> getUpcomingMovies();
+    Flowable<List<MovieListUIModel>> getPopularMovies(MovieListDbFlag flag);
+    Flowable<List<MovieListUIModel>> getTopMovies(MovieListDbFlag flag);
+    Flowable<List<MovieListUIModel>> getUpcomingMovies(MovieListDbFlag flag);
     MovieDetailsUIModel getMovieDetails(int movieId);
-    void insertMovieList(List<MovieListUIModel> movieListUIModels);
-    void insertMovieDetails(MovieDetailsUIModel movieDetailsUIModel);
+    void insertMovieList(List<MovieListDbModel> movieListUIModels);
+    void insertMovieDetails(MovieDetailsDbModel movieDetailsUIModel);
+    void clearMovieList();
+    void clearMovieDetails();
 
 }

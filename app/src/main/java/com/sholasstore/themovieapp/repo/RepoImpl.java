@@ -1,14 +1,20 @@
+/*
 package com.sholasstore.themovieapp.repo;
 
 import com.sholasstore.themovieapp.movie_details_fragment.MovieDetailsUIModel;
 import com.sholasstore.themovieapp.movie_list_fragment.MovieListUIModel;
+import com.sholasstore.themovieapp.room.MovieListDbModel;
+import com.sholasstore.themovieapp.room.MovieListDbModel.MovieListDbFlag;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 // TODO: 6/3/2020 Provide a complete implementation for this class and incorporate the local data source into the repository layer
 public class RepoImpl {
@@ -22,35 +28,22 @@ public class RepoImpl {
         mLocalRepo = localRepo;
     }
 
-    public Single<List<MovieListUIModel>> getPopularMovies() {
-        return mLocalRepo.getPopularMovies()
-                .onErrorResumeNext(mRemoteRepo.getPopularMovies(1))
-                .doAfterSuccess(new Consumer<List<MovieListUIModel>>() {
-                    @Override
-                    public void accept(List<MovieListUIModel> movieListUIModels) throws Exception {
-                        mLocalRepo.insertMovieList(movieListUIModels);
-                    }
-                });
+    public Single<List<MovieListDbModel>> getPopularMovies() {
+
     }
 
-    public Single<List<MovieListUIModel>> getTopMovies() {
-        return mLocalRepo.getTopMovies()
-                .onErrorResumeNext(mRemoteRepo.getTopRatedMovies(1))
-                .doOnSuccess(new Consumer<List<MovieListUIModel>>() {
-                    @Override
-                    public void accept(List<MovieListUIModel> movieListUIModels) throws Exception {
-                        mLocalRepo.insertMovieList(movieListUIModels);
-                    }
-                });
+    public Flowable<List<MovieListUIModel>> getTopMovies() {
+        return mLocalRepo.getTopMovies(MovieListDbFlag.TOP_MOVIES)
+                .flat
     }
 
     public Single<List<MovieListUIModel>> getUpcomingMovies() {
         return mLocalRepo.getTopMovies()
                 .onErrorResumeNext(mRemoteRepo.getUpcomingMovies(1))
-                .doOnSuccess(new Consumer<List<MovieListUIModel>>() {
+                .doOnSuccess(new Consumer<List<MovieListDbModel>>() {
                     @Override
-                    public void accept(List<MovieListUIModel> movieListUIModels) throws Exception {
-                        mLocalRepo.insertMovieList(movieListUIModels);
+                    public void accept(List<MovieListDbModel> movieListDbModels) throws Exception {
+                        mLocalRepo.insertMovieList(movieListDbModels);
                     }
                 });
     }
@@ -58,4 +51,4 @@ public class RepoImpl {
     public MovieDetailsUIModel getMovieDetails(int movieId) {
         return mLocalRepo.getMovieDetails(movieId);
     }
-}
+}*/

@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.StringUtil;
 import com.sholasstore.themovieapp.databinding.FragmentMovieDetailsBinding;
-import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
 
 import javax.inject.Inject;
 
@@ -47,7 +46,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
 
     @Override
     public void showMovieDetails(MovieDetailsUIModel uiModel) {
-        uiModel.setMovieId(movieId);
+        //uiModel.setMovieId(movieId);
         Glide.with(mBinding.getRoot().getContext())
                 .load(StringUtil.appendBaseImageUrl(uiModel.getPosterPath()))
                 .into(mBinding.imageViewMoviePoster);

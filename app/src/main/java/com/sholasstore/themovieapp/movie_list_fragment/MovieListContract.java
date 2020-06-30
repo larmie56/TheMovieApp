@@ -14,5 +14,6 @@ public interface MovieListContract {
 
     interface Presenter extends BasePresenter<View> {
         void fetchData();
+        void refresh();
     }
 }

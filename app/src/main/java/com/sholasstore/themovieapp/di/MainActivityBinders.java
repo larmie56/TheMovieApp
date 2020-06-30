@@ -10,5 +10,5 @@ import dagger.Module;
 public abstract class MainActivityBinders {
 
     @Binds
-    abstract public MainActivityContract.Presenter providesPresentrer(MainActivityPresenter presenter);
+    abstract public MainActivityContract.Presenter providesPresenter(MainActivityPresenter presenter);
 }

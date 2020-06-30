@@ -64,18 +64,12 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
     public void submitList(List<MovieListUIModel> uiModels) {
         if (mUiModelsArray[0].isEmpty()) {
             mUiModelsArray[0] = uiModels;
-            for (MovieListUIModel uiModel : uiModels)
-                uiModel.setFlag(0);
         }
         else if (mUiModelsArray[1].isEmpty()) {
             mUiModelsArray[1] = uiModels;
-            for (MovieListUIModel uiModel : uiModels)
-                uiModel.setFlag(1);
         }
         else {
             mUiModelsArray[2] = uiModels;
-            for (MovieListUIModel uiModel : uiModels)
-                uiModel.setFlag(2);
         }
     }
 

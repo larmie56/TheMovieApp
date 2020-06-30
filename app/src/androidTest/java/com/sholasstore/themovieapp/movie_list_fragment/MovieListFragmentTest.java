@@ -21,9 +21,11 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class MovieListFragmentTest {
 
+    private FragmentScenario<MovieListFragment> fragmentScenario;
+
     @Before
     public void setUp() {
-        FragmentScenario<MovieListFragment> fragmentScenario
+        fragmentScenario
                 = FragmentScenario.launchInContainer(MovieListFragment.class);
     }
 
