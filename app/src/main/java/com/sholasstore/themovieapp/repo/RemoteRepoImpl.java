@@ -1,10 +1,11 @@
 package com.sholasstore.themovieapp.repo;
 
+import android.util.Log;
+
 import com.sholasstore.themovieapp.MovieService;
 import com.sholasstore.themovieapp.ObjectMapper;
 import com.sholasstore.themovieapp.model.movie_details.MovieDetailsResponse;
 import com.sholasstore.themovieapp.model.movie_list.MovieListResponse;
-import com.sholasstore.themovieapp.room.MovieDao;
 import com.sholasstore.themovieapp.room.MovieDetailsDbModel;
 import com.sholasstore.themovieapp.room.MovieListDbModel;
 
@@ -19,12 +20,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RemoteRepoImpl implements RemoteRepo {
     private MovieService mMovieService;
-    private MovieDao mMovieDao;
+    private LocalRepo mLocalRepo;
+    private String clazz = this.getClass().getSimpleName();
 
     @Inject
-    public RemoteRepoImpl(MovieService movieService, MovieDao movieDao) {
+    public RemoteRepoImpl(MovieService movieService, LocalRepo localRepo) {
         mMovieService = movieService;
-        mMovieDao = movieDao;
+        mLocalRepo = localRepo;
     }
 
     @Override
@@ -38,8 +40,9 @@ public class RemoteRepoImpl implements RemoteRepo {
                 }).doOnSuccess(new Consumer<List<MovieListDbModel>>() {
                     @Override
                     public void accept(List<MovieListDbModel> dbModels) throws Exception {
-                        mMovieDao.clearMovieList();
-                        mMovieDao.insertMovieList(dbModels);
+                        Log.d(clazz, "LOG - Inserting popular movies into local database");
+                        mLocalRepo.clearMovieList();
+                        mLocalRepo.insertMovieList(dbModels);
                     }
                 }).subscribeOn(Schedulers.io());
     }
@@ -55,8 +58,9 @@ public class RemoteRepoImpl implements RemoteRepo {
                 }).doOnSuccess(new Consumer<List<MovieListDbModel>>() {
                     @Override
                     public void accept(List<MovieListDbModel> movieListDbModels) throws Exception {
-                        mMovieDao.clearMovieList();
-                        mMovieDao.insertMovieList(movieListDbModels);
+                        Log.d(clazz, "LOG - Inserting top rated movies into local database");
+                        mLocalRepo.clearMovieList();
+                        mLocalRepo.insertMovieList(movieListDbModels);
                     }
                 }).subscribeOn(Schedulers.io());
     }
@@ -72,8 +76,9 @@ public class RemoteRepoImpl implements RemoteRepo {
                 }).doOnSuccess(new Consumer<List<MovieListDbModel>>() {
                     @Override
                     public void accept(List<MovieListDbModel> movieListDbModels) throws Exception {
-                        mMovieDao.clearMovieList();
-                        mMovieDao.insertMovieList(movieListDbModels);
+                        Log.d(clazz, "LOG - Inserting upcoming movies into local database");
+                        mLocalRepo.clearMovieList();
+                        mLocalRepo.insertMovieList(movieListDbModels);
                     }
                 }).subscribeOn(Schedulers.io());
     }
@@ -89,8 +94,8 @@ public class RemoteRepoImpl implements RemoteRepo {
                 }).doOnSuccess(new Consumer<MovieDetailsDbModel>() {
                     @Override
                     public void accept(MovieDetailsDbModel movieDetailsDbModel) throws Exception {
-                        mMovieDao.clearMovieDetails();
-                        mMovieDao.insertMovieDetails(movieDetailsDbModel);
+                        mLocalRepo.clearMovieDetails();
+                        mLocalRepo.insertMovieDetails(movieDetailsDbModel);
                     }
                 }).subscribeOn(Schedulers.io());
     }

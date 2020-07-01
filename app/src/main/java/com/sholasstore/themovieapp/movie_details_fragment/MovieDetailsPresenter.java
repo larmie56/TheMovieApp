@@ -24,7 +24,7 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
     }
 
     @Override
-    public void fetchData(int movieId) {
+    public void fetchData(final int movieId) {
         mView.showLoading();
 
         mDisposable.add(mLocalRepo.getMovieDetails(movieId)
@@ -39,6 +39,8 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
                 .subscribe(new Consumer<MovieDetailsUIModel>() {
                     @Override
                     public void accept(MovieDetailsUIModel movieDetailsUIModel) throws Exception {
+                        if (movieDetailsUIModel == null)
+                            refresh(movieId);
                         mView.showMovieDetails(movieDetailsUIModel);
                     }
                 }, new Consumer<Throwable>() {

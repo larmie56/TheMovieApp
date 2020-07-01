@@ -10,18 +10,19 @@ import com.sholasstore.themovieapp.room.MovieListDbModel.MovieListDbFlag;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 @Dao
 public interface MovieDao {
 
     @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
-    Flowable<List<MovieListDbModel>> getPopularMovieList(MovieListDbFlag flag);
+    Maybe<List<MovieListDbModel>> getPopularMovieList(MovieListDbFlag flag);
 
     @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
-    Flowable<List<MovieListDbModel>> getTopMovieList(MovieListDbFlag flag);
+    Maybe<List<MovieListDbModel>> getTopMovieList(MovieListDbFlag flag);
 
     @Query("SELECT * FROM movie_list WHERE _flag = :flag LIMIT 30")
-    Flowable<List<MovieListDbModel>> getUpcomingMovieList(MovieListDbFlag flag);
+    Maybe<List<MovieListDbModel>> getUpcomingMovieList(MovieListDbFlag flag);
 
     @Query("SELECT * FROM movie_details WHERE movie_id = :movieId LIMIT 1 ")
     Flowable<MovieDetailsDbModel> getMovieDetails(int movieId);

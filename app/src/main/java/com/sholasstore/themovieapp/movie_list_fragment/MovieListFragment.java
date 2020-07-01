@@ -1,22 +1,21 @@
 package com.sholasstore.themovieapp.movie_list_fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.sholasstore.themovieapp.App;
 import com.sholasstore.themovieapp.R;
 import com.sholasstore.themovieapp.databinding.FragmentMovieListBinding;
 import com.sholasstore.themovieapp.main_activity.IMainActivity;
-import com.sholasstore.themovieapp.repo.RemoteRepoImpl;
+import com.sholasstore.themovieapp.room.MovieListDbModel.MovieListDbFlag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +23,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class MovieListFragment extends Fragment implements MovieListContract.View {
-    private RecyclerView mPopularMovieRecyclerView;
-    private RecyclerView mTopMovieRecyclerView;
-    private RecyclerView mUpcomingMovieRecyclerView;
     private FragmentMovieListBinding mBinding;
-    private ProgressBar mProgressBar;
-    private List<MovieListUIModel>[] mUiModelsArray;
+    private List<MovieListUIModel> mPopularMovies;
+    private List<MovieListUIModel> mTopMovies;
+    private List<MovieListUIModel> mUpcomingMovies;
     @Inject MovieListContract.Presenter mPresenter;
+    private String clazz = this.getClass().getSimpleName();
 
     @Nullable
     @Override
@@ -44,15 +42,12 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
         super.onViewCreated(view, savedInstanceState);
         App app = (App) getActivity().getApplication();
         app.getAppComponent().plusMovieList().inject(this);
+
         mPresenter.attachView(this);
-        mPopularMovieRecyclerView = mBinding.recyclerViewPopularMovies;
-        mTopMovieRecyclerView = mBinding.recyclerViewTopMovies;
-        mUpcomingMovieRecyclerView = mBinding.recyclerViewUpcomingMovies;
-        mProgressBar = mBinding.progressCircular;
-        mUiModelsArray = new ArrayList[3];
-        mUiModelsArray[0] = new ArrayList<>();
-        mUiModelsArray[1] = new ArrayList<>();
-        mUiModelsArray[2] = new ArrayList<>();
+        mPopularMovies = new ArrayList<>();
+        mTopMovies = new ArrayList<>();
+        mUpcomingMovies = new ArrayList<>();
+
         mBinding.textViewPopularMovies.setText(R.string.popular_movies);
         mBinding.textViewTopMovies.setText(R.string.top_movies);
         mBinding.textViewUpcomingMovies.setText(R.string.upcoming_movies);
@@ -62,36 +57,42 @@ public class MovieListFragment extends Fragment implements MovieListContract.Vie
 
     @Override
     public void submitList(List<MovieListUIModel> uiModels) {
-        if (mUiModelsArray[0].isEmpty()) {
-            mUiModelsArray[0] = uiModels;
+        Log.d(clazz, "LOG - Submit List called on the view from the presenter");
+        if (uiModels.isEmpty()) {
+            Log.d(clazz, "LOG - List gotten from presenter empty, fetching from network");
+            mPresenter.refresh();
+            Log.d(clazz, "LOG - Presenter fetched from network");
         }
-        else if (mUiModelsArray[1].isEmpty()) {
-            mUiModelsArray[1] = uiModels;
+        else if (uiModels.get(1).getFlag() == MovieListDbFlag.POPULAR_MOVIES) {
+            mPopularMovies = uiModels;
+        }
+        else if (uiModels.get(1).getFlag() == MovieListDbFlag.TOP_MOVIES) {
+            mTopMovies = uiModels;
         }
         else {
-            mUiModelsArray[2] = uiModels;
+            mUpcomingMovies = uiModels;
         }
     }
 
     @Override
     public void showData() {
-        MovieListAdapter popularMoviesAdapter = new MovieListAdapter(mUiModelsArray[0], getActivity(), (IMainActivity) getActivity());
-        MovieListAdapter topRatedMoviesAdapter = new MovieListAdapter(mUiModelsArray[1], getActivity(), (IMainActivity) getActivity());
-        MovieListAdapter upcomingMoviesAdapter = new MovieListAdapter(mUiModelsArray[2], getActivity(), (IMainActivity) getActivity());
+        MovieListAdapter popularMoviesAdapter = new MovieListAdapter(mPopularMovies, getActivity(), (IMainActivity) getActivity());
+        MovieListAdapter topRatedMoviesAdapter = new MovieListAdapter(mTopMovies, getActivity(), (IMainActivity) getActivity());
+        MovieListAdapter upcomingMoviesAdapter = new MovieListAdapter(mUpcomingMovies, getActivity(), (IMainActivity) getActivity());
 
-        mPopularMovieRecyclerView.setAdapter(popularMoviesAdapter);
-        mTopMovieRecyclerView.setAdapter(topRatedMoviesAdapter);
-        mUpcomingMovieRecyclerView.setAdapter(upcomingMoviesAdapter);
+        mBinding.recyclerViewPopularMovies.setAdapter(popularMoviesAdapter);
+        mBinding.recyclerViewTopMovies.setAdapter(topRatedMoviesAdapter);
+        mBinding.recyclerViewUpcomingMovies.setAdapter(upcomingMoviesAdapter);
     }
 
     @Override
     public void showLoading() {
-        mProgressBar.setVisibility(View.VISIBLE);
+        mBinding.progressCircular.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        mProgressBar.setVisibility(View.GONE);
+        mBinding.progressCircular.setVisibility(View.GONE);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class ObjectMapper {
         List<MovieListUIModel> uiModels = new ArrayList<>();
 
         for (MovieListDbModel dbModel: dbModels) {
-            uiModels.add(new MovieListUIModel(dbModel.getPosterPath(), dbModel.getTitle(), dbModel.getId()));
+            uiModels.add(new MovieListUIModel(dbModel.getPosterPath(), dbModel.getTitle(), dbModel.getId(), dbModel.getFlag()));
         }
 
         return uiModels;
