@@ -94,7 +94,6 @@ public class RemoteRepoImpl implements RemoteRepo {
                 }).doOnSuccess(new Consumer<MovieDetailsDbModel>() {
                     @Override
                     public void accept(MovieDetailsDbModel movieDetailsDbModel) throws Exception {
-                        mLocalRepo.clearMovieDetails();
                         mLocalRepo.insertMovieDetails(movieDetailsDbModel);
                     }
                 }).subscribeOn(Schedulers.io());

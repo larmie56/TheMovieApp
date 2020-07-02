@@ -46,16 +46,20 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsContra
 
     @Override
     public void showMovieDetails(MovieDetailsUIModel uiModel) {
-        Glide.with(mBinding.getRoot().getContext())
-                .load(StringUtil.appendBaseImageUrl(uiModel.getPosterPath()))
-                .into(mBinding.imageViewMoviePoster);
+        if (uiModel == null)
+            mPresenter.refresh(movieId);
+        else {
+            Glide.with(mBinding.getRoot().getContext())
+                    .load(StringUtil.appendBaseImageUrl(uiModel.getPosterPath()))
+                    .into(mBinding.imageViewMoviePoster);
 
-        mBinding.textViewMovieTitle.setText(uiModel.getMovieTitle());
-        mBinding.textViewMovieOverview.setText(uiModel.getMovieOverview());
-        mBinding.textViewMovieGenre.setText(uiModel.getMovieGenres());
-        mBinding.textViewReleaseDate.setText(StringUtil.formatReleaseDateString(uiModel.getReleaseDate()));
-        mBinding.textViewRevenue.setText(StringUtil.formatRevenueString(uiModel.getRevenue()));
-        mBinding.textViewRuntime.setText(StringUtil.formatMovieRuntimeInt(uiModel.getRuntime()));
+            mBinding.textViewMovieTitle.setText(uiModel.getMovieTitle());
+            mBinding.textViewMovieOverview.setText(uiModel.getMovieOverview());
+            mBinding.textViewMovieGenre.setText(uiModel.getMovieGenres());
+            mBinding.textViewReleaseDate.setText(StringUtil.formatReleaseDateString(uiModel.getReleaseDate()));
+            mBinding.textViewRevenue.setText(StringUtil.formatRevenueString(uiModel.getRevenue()));
+            mBinding.textViewRuntime.setText(StringUtil.formatMovieRuntimeInt(uiModel.getRuntime()));
+        }
     }
 
     @Override

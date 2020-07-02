@@ -16,7 +16,8 @@ public interface LocalRepo {
     Maybe<List<MovieListUIModel>> getPopularMovies(MovieListDbFlag flag);
     Maybe<List<MovieListUIModel>> getTopMovies(MovieListDbFlag flag);
     Maybe<List<MovieListUIModel>> getUpcomingMovies(MovieListDbFlag flag);
-    Flowable<MovieDetailsUIModel> getMovieDetails(int movieId);
+    //Maybe<MovieDetailsUIModel> getMovieDetails(int movieId);
+    MovieDetailsUIModel getMovieDetails(int movieId);
     void insertMovieList(List<MovieListDbModel> movieListUIModels);
     void insertMovieDetails(MovieDetailsDbModel movieDetailsUIModel);
     void clearMovieList();

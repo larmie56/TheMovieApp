@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
 public class LocalRepoImpl implements LocalRepo {
@@ -59,8 +60,8 @@ public class LocalRepoImpl implements LocalRepo {
                 });
     }
 
-    @Override
-    public Flowable<MovieDetailsUIModel> getMovieDetails(int movieId) {
+    /*@Override
+    public Maybe<MovieDetailsUIModel> getMovieDetails(int movieId) {
         return mMovieDao.getMovieDetails(movieId)
                 .map(new Function<MovieDetailsDbModel, MovieDetailsUIModel>() {
                     @Override
@@ -68,8 +69,16 @@ public class LocalRepoImpl implements LocalRepo {
                         return ObjectMapper.mapMovieDetailsDbModelToUIModel(movieDetailsDbModel);
                     }
                 });
-    }
+    }*/
 
+    @Override
+    public MovieDetailsUIModel getMovieDetails(int movieId) {
+        final MovieDetailsDbModel movieDetails = mMovieDao.getMovieDetails(movieId);
+        if (movieDetails != null)
+            return ObjectMapper.mapMovieDetailsDbModelToUIModel(mMovieDao.getMovieDetails(movieId));
+        else
+            return null;
+    }
     @Override
     public void insertMovieList(List<MovieListDbModel> movieListDbModels) {
         mMovieDao.insertMovieList(movieListDbModels);
