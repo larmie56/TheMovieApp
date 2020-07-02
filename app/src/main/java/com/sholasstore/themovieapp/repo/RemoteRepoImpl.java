@@ -41,7 +41,6 @@ public class RemoteRepoImpl implements RemoteRepo {
                     @Override
                     public void accept(List<MovieListDbModel> dbModels) throws Exception {
                         Log.d(clazz, "LOG - Inserting popular movies into local database");
-                        mLocalRepo.clearMovieList();
                         mLocalRepo.insertMovieList(dbModels);
                     }
                 }).subscribeOn(Schedulers.io());
@@ -59,7 +58,6 @@ public class RemoteRepoImpl implements RemoteRepo {
                     @Override
                     public void accept(List<MovieListDbModel> movieListDbModels) throws Exception {
                         Log.d(clazz, "LOG - Inserting top rated movies into local database");
-                        mLocalRepo.clearMovieList();
                         mLocalRepo.insertMovieList(movieListDbModels);
                     }
                 }).subscribeOn(Schedulers.io());
@@ -77,7 +75,6 @@ public class RemoteRepoImpl implements RemoteRepo {
                     @Override
                     public void accept(List<MovieListDbModel> movieListDbModels) throws Exception {
                         Log.d(clazz, "LOG - Inserting upcoming movies into local database");
-                        mLocalRepo.clearMovieList();
                         mLocalRepo.insertMovieList(movieListDbModels);
                     }
                 }).subscribeOn(Schedulers.io());

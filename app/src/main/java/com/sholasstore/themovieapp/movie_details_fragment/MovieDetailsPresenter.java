@@ -86,9 +86,6 @@ public class MovieDetailsPresenter implements MovieDetailsContract.Presenter {
 
     @Override
     public void refresh(final int movieId) {
-       /* if (mLocalDisposable != null && !mLocalDisposable.isDisposed()) {
-            mLocalDisposable.dispose();
-        }*/
         mRemoteDisposable = mRemoteRepo.getMovieDetails(movieId)
                 .doOnTerminate(new Action() {
                     @Override
